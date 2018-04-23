@@ -9,6 +9,16 @@ body {
   max-width: 1070px;
   padding: 20px;
   min-width: 1070px;
+  display: flex;
+  flex-direction: column;
+}
+
+ul {
+  padding-left: 0;
+}
+
+li {
+  list-style-type: none;
 }
 
 .nav {
