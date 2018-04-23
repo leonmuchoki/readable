@@ -3,26 +3,14 @@ import React, { Component } from 'react';
 class LeftSideBar extends Component {
   
   render () {
-    const categories = [
-      {
-        name: 'react',
-        path: 'react'
-      },
-      {
-        name: 'redux',
-        path: 'redux'
-      },
-      {
-        name: 'udacity',
-        path: 'udacity'
-      }
-    ]
+    const categories = this.props.categories
 
     return (
-      <div>
+      <div className="left-side-bar">
+        <h3>Category</h3>
         <ul className='category-list'>
           {categories.map((c, index)=>(
-            <li key={index}>{c.name}</li>
+            <li key={index} className="category-list-item"><a href="#">{c.name}</a></li>
           ))}
         </ul>
       </div>
