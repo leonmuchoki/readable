@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 
 class Posts extends Component {
+  
   render () {
-    const defaultPosts = this.props.getDefaultPosts;
-    const dP = defaultPosts();
-    console.log(dP);
+    const dP = this.props.allPosts;
     return (
       <div className='Posts'>
         <ul>
