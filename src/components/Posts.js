@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class Posts extends Component {
   
@@ -9,7 +10,7 @@ class Posts extends Component {
         <ul>
           {dP.map((p, index)=>(
             <div className="post-item">
-              <li key={index} className="header-post-item"><a href="#">{p}</a></li>
+              <li key={index} className="header-post-item"><Link to={`/posts/${ p["id"] }`}>{p["title"]}</Link></li>
             </div>
           ))}
         </ul>
