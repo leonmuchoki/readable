@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import LeftSideBar from './LeftSideBar';
 import Posts from './Posts';
 import PostDetail from './PostDetail';
+import CategoryPosts from './CategoryPosts';
 import * as ReadableAPI from '../utils/ReadableAPI';
 
 class Main extends Component {
@@ -26,7 +27,6 @@ class Main extends Component {
                     })
                   ))
                   this.setState({all_posts: posts})
-                  console.log('ati all posts...' + posts)
                 })  
     //console.log('all_maposts' + all_posts)     
   }
@@ -34,7 +34,6 @@ class Main extends Component {
 
   render() {
     const categories = this.props.categories
-    console.log('Main...' + JSON.stringify(categories))
     return (
       <div className='main'>
         <LeftSideBar categories={categories} />
@@ -42,6 +41,8 @@ class Main extends Component {
                  render={() => ( 
                                   <Posts allPosts={this.state.all_posts} /> 
                                 )} />
+        <Route exact path="/:category/posts" component={CategoryPosts} /> 
+                              
         <Route path="/post/:id" component={PostDetail} />
       </div>
     )

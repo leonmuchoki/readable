@@ -8,14 +8,12 @@ class PostDetail extends Component {
 
   componentDidMount() {
     const id = this.props.match.params.id
-    console.log('id...' + id)
     this.getPostDetails(id);
   }
 
   getPostDetails = (id) => {
     ReadableAPI.getPost(id)
                 .then(data => {
-                  console.log("getPostDetails>>>" + JSON.stringify(data))
                   this.setState({
                     post_details: data
                   })
@@ -28,6 +26,9 @@ class PostDetail extends Component {
     
     return (
       <div className="post-detail">
+        <div className="post-detail-top">
+          <span className="post-detail-author">{post_details["author"]}</span>
+        </div>
         <h3>{post_details["title"]}</h3>
         <div>
           {post_details["body"]}
