@@ -1,16 +1,32 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
+import * as ReadableAPI from '../utils/ReadableAPI';
 import Nav from './Nav';
 import Main from './Main';
 
 
 class App extends Component {
+
+  state = {
+    categories: []
+  }
+  componentDidMount() {
+    this.getCategories();
+  }
+
+  getCategories = () => {
+    ReadableAPI.getAllCatgories()
+                .then((data)=> {
+                  console.log('getCategories...' + data)
+                  this.setState({categories: data})
+                })
+  }
   render() {
     return (
       <div className='container'>
         <Nav />
         <div className="main-body-container">
-          <Route path="/" component={Main} />
+          <Main categories={this.state.categories} />
         </div>
       </div>
     );

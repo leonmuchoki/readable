@@ -11,15 +11,22 @@ const headers = {
     'Authorization': token
 }
 
+// get all posts
 export const getAllPosts = () => 
   fetch(`${api}/posts`, { headers })
     .then(res => res.json())
     .then(data => data)
 
+// get specific post
 export const getPost = (id) =>
-  fetch(`${api}/posts`, { headers })
+  fetch(`${api}/posts/${id}`, { headers })
   .then(res => res.json())
   .then(data => data)
 
+// get all categories
+export const getAllCatgories = () => 
+  fetch(`${api}/categories`, { headers })
+    .then(res => res.json())
+    .then(data => data.categories)
 
 

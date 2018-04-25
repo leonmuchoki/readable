@@ -70,7 +70,8 @@ li {
 }
 
 .Posts {
-  margin-left: 10%;
+  display: flex;
+  align-items: center;
 }
 
 .post-item {
@@ -127,4 +128,18 @@ li {
   text-decoration: none;
   background: transparent;
   cursor: pointer;
+}
+
+.post-detail {
+  margin-top: 0;
+  border: 1px solid #efefef;
+  background-color: #fff;
+  border-radius: 4px;
+  border-bottom: 1px solid #e2e2e2;
+  margin-bottom: 8px;
+  padding-left: 16px;
+  padding-right: 16px;
+  transition: border-color .5s ease;
+  padding-top: 16px;
+  margin: 0 0 16px 10px;
 }

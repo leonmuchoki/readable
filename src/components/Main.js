@@ -10,6 +10,10 @@ class Main extends Component {
     all_posts: []
   }
 
+  componentDidMount() {
+    this.getDefaultPosts();
+  }
+
   getDefaultPosts = () => {
     ReadableAPI.getAllPosts()
                 .then((data)=> {
@@ -27,31 +31,18 @@ class Main extends Component {
     //console.log('all_maposts' + all_posts)     
   }
 
-  componentDidMount() {
-    this.getDefaultPosts();
-  }
 
   render() {
-    const categories = [
-      {
-        name: 'react',
-        path: 'react'
-      },
-      {
-        name: 'redux',
-        path: 'redux'
-      },
-      {
-        name: 'udacity',
-        path: 'udacity'
-      }
-    ]
+    const categories = this.props.categories
+    console.log('Main...' + JSON.stringify(categories))
     return (
       <div className='main'>
         <LeftSideBar categories={categories} />
         <Route exact path="/"
-                 render={() => ( <Posts allPosts={this.state.all_posts} /> )} />
-        <Route path="/post:id" component={PostDetail} />
+                 render={() => ( 
+                                  <Posts allPosts={this.state.all_posts} /> 
+                                )} />
+        <Route path="/post/:id" component={PostDetail} />
       </div>
     )
   }
