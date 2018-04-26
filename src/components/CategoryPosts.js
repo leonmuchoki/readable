@@ -17,7 +17,6 @@ class CategoryPosts extends Component {
     
     ReadableAPI.getCategoryPosts(category)
                 .then((data)=>{
-                  console.log('CategoryPosts---' + JSON.stringify(data))
                   this.setState({category_posts: data})
                 })
   }

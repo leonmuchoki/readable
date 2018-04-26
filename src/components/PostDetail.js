@@ -26,12 +26,12 @@ class PostDetail extends Component {
     
     return (
       <div className="post-detail">
+        <h3>{post_details["title"]}</h3>
         <div className="post-detail-top">
           <span className="post-detail-author">{post_details["author"]}</span>
         </div>
-        <h3>{post_details["title"]}</h3>
-        <div>
-          {post_details["body"]}
+        <div className="post-detail-body">
+          <span className="post-detail-body-text">{post_details["body"]}</span>
         </div>
       </div>
     )
