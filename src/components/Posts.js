@@ -9,9 +9,11 @@ class Posts extends Component {
       <div className='Posts'>
         <ul>
           {dP.map((p, index)=>(
-            <div className="post-item">
+            <div className="post-item" key={index}>
               <li key={index} className="header-post-item">
-                <Link to={`/post/${ p["id"] }`}>{p["title"]}</Link>
+                <Link to={`/post/${ p["id"] }`} key={index}>
+                  {p["title"]}
+                </Link>
               </li>
             </div>
           ))}
