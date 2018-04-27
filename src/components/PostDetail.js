@@ -23,6 +23,7 @@ class PostDetail extends Component {
   render () {
     const categories = this.props.categories
     const post_details = this.state.post_details
+    console.log('post_details' + JSON.stringify(post_details))
     
     return (
       <div className="post-detail">

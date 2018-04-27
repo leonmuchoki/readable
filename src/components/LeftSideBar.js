@@ -12,7 +12,7 @@ class LeftSideBar extends Component {
         <ul className='category-list'>
           {categories.map((c, index)=>(
             <li key={index} className="category-list-item">
-            <Link to={`${c.name}/posts`}>{c.name}</Link>
+            <Link to={`/${c.name}/posts`}>{c.name}</Link>
             </li>
           ))}
         </ul>

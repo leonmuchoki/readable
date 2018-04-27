@@ -23,16 +23,21 @@ class CategoryPosts extends Component {
 
   render () {
     const dP = this.state.category_posts;
+
     return (
       <div className='Posts'>
         <ul>
-          {dP.map((p, index)=>(
+          {dP.length > 0 
+            ? (dP.map((p, index)=>(
             <div className="post-item"  key={index}>
               <li key={index} className="header-post-item">
                 <Link to={`/post/${ p["id"] }`} key={index}>{p["title"]}</Link>
               </li>
             </div>
-          ))}
+          ))
+          )
+          : <div className="no-category-post"><span>This category has no post yet...</span></div>
+        }
         </ul>
       </div>
     )

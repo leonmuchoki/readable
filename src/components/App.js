@@ -17,7 +17,6 @@ class App extends Component {
   getCategories = () => {
     ReadableAPI.getAllCatgories()
                 .then((data)=> {
-                  console.log('getCategories...' + data)
                   this.setState({categories: data})
                 })
   }
