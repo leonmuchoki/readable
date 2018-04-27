@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import * as ReadableAPI from '../utils/ReadableAPI';
+import { Link } from 'react-router-dom';
+import PostComment from './PostComment';
 
 class PostDetail extends Component {
   state = {
@@ -23,6 +25,8 @@ class PostDetail extends Component {
   render () {
     const categories = this.props.categories
     const post_details = this.state.post_details
+    const comment_count = post_details["commentCount"]
+
     console.log('post_details' + JSON.stringify(post_details))
     
     return (
@@ -34,6 +38,7 @@ class PostDetail extends Component {
         <div className="post-detail-body">
           <span className="post-detail-body-text">{post_details["body"]}</span>
         </div>
+       <PostComment countComments={comment_count} />
       </div>
     )
   }
