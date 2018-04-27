@@ -198,6 +198,10 @@ div {
   margin-left: 4px!important;
 }
 
+.post-detail-footer {
+  display: flex;
+}
+
 .bullet {
   opacity: .5;
   color: #999;
