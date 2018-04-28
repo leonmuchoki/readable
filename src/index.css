@@ -211,3 +211,45 @@ div {
   opacity: .5;
   color: #999;
 }
+
+.comments-wrap {
+  border: 0;
+  
+  background-color: #f7f7f7;
+  min-height: 27px;
+  display: block;
+  font-size: 13px;
+  padding: 16px;
+  background: #f6f6f6;
+  border-radius: 4px;
+  margin-top: 16px!important;
+}
+
+.comments-contents {
+  position: relative;
+  padding: 8px 8px 8px 38px;
+}
+
+.comments-author {
+  color: #333;
+  unicode-bidi: bidi-override;
+  font-weight: bold;
+  font-size: 13px;
+  line-height: 1.5;
+  font-family: 'q_serif',Georgia,Times,"Times New Roman","Hiragino Kaku Gothic Pro","Meiryo",serif;
+}
+
+.comment-author-comment {
+  font-size: 13px;
+  line-height: 1.5;
+  tab-size: 4;
+  font-family: 'q_serif',Georgia,Times,"Times New Roman","Hiragino Kaku Gothic Pro","Meiryo",serif;
+}
+
+.comment-author-comment p {
+  margin-bottom: 0!important;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import PostComment from './PostComment';
 import PostVote from './PostVote';
 import UpVoteIcon from 'react-icons/lib/fa/hand-o-up';
+import Comments from './Comments';
 
 class PostDetail extends Component {
   state = {
@@ -29,8 +30,7 @@ class PostDetail extends Component {
     const post_details = this.state.post_details
     const comment_count = post_details["commentCount"]
     const vote_count = post_details["voteScore"]
-
-    console.log('post_details' + JSON.stringify(post_details))
+    const post_id = this.props.match.params.id
     
     return (
       <div className="post-detail">
@@ -42,8 +42,11 @@ class PostDetail extends Component {
           <span className="post-detail-body-text">{post_details["body"]}</span>
         </div>
         <div className="post-detail-footer">
-          <PostVote countVotes={vote_count} />
           <PostComment countComments={comment_count} />
+          <PostVote countVotes={vote_count} />
+        </div>
+        <div>
+            <Comments postId={post_id} />
         </div>
       </div>
     )
