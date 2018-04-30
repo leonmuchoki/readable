@@ -99,6 +99,7 @@ div {
   font-size: 18px;
 }
 
+
 .left-side-bar {
   border-right: thick solid #ccc6c6;
   padding-right: 50px;
@@ -159,6 +160,8 @@ div {
   line-height: 1.2em;
   margin-bottom: 12px;
   color: #333;
+  display: flex;
+  flex-direction: column;
 }
 
 .post-detail-body {

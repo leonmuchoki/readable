@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import * as ReadableAPI from '../utils/ReadableAPI';
 import { Link } from 'react-router-dom';
+import Moment from 'react-moment';
 import PostComment from './PostComment';
 import PostVote from './PostVote';
 import UpVoteIcon from 'react-icons/lib/fa/hand-o-up';
 import Comments from './Comments';
+import * as Helpers from '../utils/helpers';
 
 class PostDetail extends Component {
   state = {
@@ -31,12 +33,14 @@ class PostDetail extends Component {
     const comment_count = post_details["commentCount"]
     const vote_count = post_details["voteScore"]
     const post_id = this.props.match.params.id
-    
+    console.log('postdetails...' + JSON.stringify(post_details))
+
     return (
       <div className="post-detail">
         <h3>{post_details["title"]}</h3>
         <div className="post-detail-top">
           <span className="post-detail-author">{post_details["author"]}</span>
+          <span className="comments-events-time"><Moment fromNow>{Helpers.getDateFromTimeStamp(post_details["timestamp"])}</Moment></span>
         </div>
         <div className="post-detail-body">
           <span className="post-detail-body-text">{post_details["body"]}</span>
