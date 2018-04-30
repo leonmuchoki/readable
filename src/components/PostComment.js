@@ -14,7 +14,7 @@ class PostComment extends Component {
             <div className="post-detail-comment-icon"><CommentIcon /></div>
             <div className="post-detail-comment-icon-label">
               <span className="post-detail-comment">Comment</span>
-              <span className="bullet">.</span>
+              <span aria-hidden="true" className="bullet"> · </span>
               {count_comments}
             </div>
           </Link>

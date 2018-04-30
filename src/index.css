@@ -135,6 +135,11 @@ div {
   cursor: pointer;
 }
 
+.category-list-item:hover {
+  background-color:#fafafa;
+  border-radius: 5%;
+}
+
 .post-detail {
   margin-top: 0;
   border: 1px solid #efefef;
@@ -259,5 +264,32 @@ div {
   margin: 0;
   padding: 0;
   display: block;
+}
+
+.comments-events {
+  font-size: 13px;
+  line-height: 12px;
+  margin-bottom: 3px;
+  margin-left: 10px;
+  color: #90949c;
+  padding-top: 3px;
+  min-height: 15px;
+  clear: both;
+  font-weight: normal;
+}
+
+.comments-events-vote {
+  display: inline-block;
+  width: auto;
+  position: relative;
+  outline: none;
+  word-wrap: normal;
+  color: #365899;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.comments-events-time {
+  color: #90949c;
 }
 
