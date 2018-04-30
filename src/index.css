@@ -226,14 +226,22 @@ div {
 }
 
 .comments-contents {
-  position: relative;
-  padding: 8px 8px 8px 38px;
+  background-color: #fff;
+  padding-left: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 13px;
+  padding: 8px 10px;
+  border-radius: 18px;
+  display: block;
+  line-height: 16px;
+  margin-top: 16px!important;
 }
 
-.comments-author {
+.comment-author {
   color: #333;
-  unicode-bidi: bidi-override;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 13px;
   line-height: 1.5;
   font-family: 'q_serif',Georgia,Times,"Times New Roman","Hiragino Kaku Gothic Pro","Meiryo",serif;

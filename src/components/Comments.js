@@ -24,9 +24,9 @@ class Comments extends Component {
     console.log('comments...' + JSON.stringify(comments))
     return (
       <div className="comments-wrap">
-        <div className="comments-contents">
+        <div className="comments-contents-wrap">
           {comments.map((c, index)=> (
-            <div key={index}>
+            <div key={index}  className="comments-contents">
               <div className="comment-author">{c["author"]}</div>
               <div className="comment-author-comment">
                 <p>{c["body"]}</p>
