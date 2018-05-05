@@ -45,7 +45,10 @@ class Main extends Component {
         <Route exact path="/:category/posts" component={CategoryPosts} /> 
                               
         <Route path="/post/:id" component={PostDetail} />
-        <Route path="/create/post" component={CreatePost} />
+        <Route path="/create/post" 
+               render={()=> (
+                 <CreatePost categories={categories} />
+               )} />
       </div>
     )
   }

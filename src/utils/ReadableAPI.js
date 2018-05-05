@@ -41,4 +41,15 @@ export const getPostComments = (post_id) =>
     .then(res => res.json())
     .then(data => data)
 
-
+//  create post /posts
+export const createNewPost = (post_body) => 
+  fetch(`${api}/posts`, { 
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(post_body) 
+  })
+    .then(res => res.json())
+    .then(data => data)
