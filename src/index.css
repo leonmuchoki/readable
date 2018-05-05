@@ -72,6 +72,7 @@ div {
 
 .main {
   display: flex;
+  margin-left: 16px;
 }
 
 .Posts {
@@ -105,6 +106,7 @@ div {
   padding-right: 50px;
   width: 142px;
   margin-bottom: 32px;
+  margin-right: 16px;
 }
 
 .left-side-bar h3 {
@@ -141,6 +143,7 @@ div {
   border-radius: 5%;
 }
 
+
 .post-detail {
   margin-top: 0;
   border: 1px solid #efefef;
@@ -152,7 +155,8 @@ div {
   padding-right: 16px;
   transition: border-color .5s ease;
   padding-top: 16px;
-  margin: 0 0 16px 10px;
+  padding-bottom: 16px;
+  
 }
 
 .post-detail-top {
@@ -295,4 +299,99 @@ div {
 .comments-events-time {
   color: #90949c;
 }
+
+.form-wrap{
+  width: 55%;
+}
+
+.form-title {
+  margin: 0px 3px 0px 0px;
+  padding: 1px 3px 5px 0!important;
+  position: relative;
+}
+
+.form-inputs-wrap {
+  background: #fff;
+  border: 1px solid #ccc;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
+input {
+  text-rendering: auto;
+  color: initial;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: start;
+  margin: 0em;
+  font: 400 13.3333px Arial;
+}
+
+.form-input {
+  border-top: 0!important;
+  border-right: 0!important;
+  border-left: 0!important;
+  border-bottom: 1px solid #cfcfcf;
+  padding: 0;
+  border-radius: 1px;
+  transition: none;
+  margin: 8px!important;
+  background-color: #fff;
+  overflow: hidden;
+  color: #222;
+  font-size: 19px;
+  border-color: #666666 #ccc #ccc #ccc;
+  padding: 7px 2px 1px 4px;
+  vertical-align: top;
+  font-family: arial,sans-serif;
+  min-height: 41px;
+  outline: none;
+  max-height: 93px;
+}
+
+.form-input-button {
+  background-color: #4d90fe;
+  background-image: -webkit-linear-gradient(top,#4d90fe,#4787ed);
+  border: 1px solid #3079ed;
+  color: #fff;
+  border-radius: 2px;
+  cursor: default;
+  font-size: 11px;
+  font-weight: bold;
+  text-align: center;
+  white-space: nowrap;
+  margin-top: 16px;
+  height: 27px;
+  line-height: 27px;
+  min-width: 54px;
+  padding: 0 8px;
+}
+
+.form-input-select {
+  box-sizing: border-box;
+  align-items: center;
+  white-space: pre;
+  color: black;
+  background-color: white;
+  cursor: default;
+  border: 1px solid #bdc7d8;
+  padding: 2px;
+  width: 50%;
+  margin: 8px;
+}
+
+option {
+  font-weight: normal;
+  display: block;
+  white-space: pre;
+  min-height: 1.2em;
+  padding: 0px 2px 1px;
+}
+
 

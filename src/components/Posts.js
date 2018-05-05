@@ -6,7 +6,7 @@ class Posts extends Component {
   render () {
     const dP = this.props.allPosts;
     return (
-      <div className='Posts'>
+      <div className='posts-wrap'>
         <ul>
           {dP.map((p, index)=>(
             <div className="post-item" key={index}>

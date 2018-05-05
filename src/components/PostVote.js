@@ -13,7 +13,7 @@ class PostVote extends Component {
           <div className="post-detail-comment-icon"><UpVoteIcon /></div>
           <div className="post-detail-comment-icon-label">
             <span className="post-detail-comment">Vote</span>
-            <span className="bullet">.</span>
+            <span aria-hidden="true" className="bullet"> · </span>
             {count_votes}
           </div>
         </Link>

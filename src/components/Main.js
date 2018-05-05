@@ -4,6 +4,7 @@ import LeftSideBar from './LeftSideBar';
 import Posts from './Posts';
 import PostDetail from './PostDetail';
 import CategoryPosts from './CategoryPosts';
+import CreatePost from './CreatePost';
 import * as ReadableAPI from '../utils/ReadableAPI';
 
 class Main extends Component {
@@ -44,6 +45,7 @@ class Main extends Component {
         <Route exact path="/:category/posts" component={CategoryPosts} /> 
                               
         <Route path="/post/:id" component={PostDetail} />
+        <Route path="/create/post" component={CreatePost} />
       </div>
     )
   }

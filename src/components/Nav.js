@@ -9,9 +9,8 @@ class Nav extends Component {
       <div>
         <div className='nav'>
           <h1 className='header'><Link to="/"><ReadableIcon /> Readable</Link></h1>
-          <button className='btn-add-post'>
-            <PlusIcon /> Add Post
-          </button>
+          <Link to="/create/post" className="btn-add-post"><PlusIcon /> Add Post</Link>
+          
         </div>
       </div>
     )
