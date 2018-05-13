@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import * as ReadableAPI from '../utils/ReadableAPI';
 import * as Helpers from '../utils/helpers';
+import CreateComment from './CreateComment';
 
 class Comments extends Component {
   
@@ -24,10 +25,12 @@ class Comments extends Component {
 
   render () {
     const comments = this.state.post_comments;
+    const postId = this.props.postId
     //console.log('comments...' + JSON.stringify(comments))
     return (
       <div className="comments-wrap">
         <div className="comments-contents-wrap">
+          <CreateComment post_id={postId} />
           {comments.map((c, index)=> (
             <div key={index}>
               <div className="comments-contents">

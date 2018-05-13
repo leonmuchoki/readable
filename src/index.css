@@ -397,4 +397,16 @@ option {
   padding: 0px 2px 1px;
 }
 
+.create-comment-wrap {
+  padding: 5px;
+}
+
+.form-input-comment {
+  margin-left: 5px;
+}
+
+.form-input-button-comment {
+  margin-left: 5px;
+}
+
 

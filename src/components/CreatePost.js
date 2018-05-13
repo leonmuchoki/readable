@@ -20,7 +20,7 @@ class CreatePost extends Component {
 
   createNewPost = (values_to_post) => {
     ReadableAPI.createNewPost(values_to_post)
-                .then(data => (console.log('createNewPost successful...' )))
+                .then(data => (console.log('createNewPost successful...' + JSON.stringify(data) )))
   }
 
   render() {
