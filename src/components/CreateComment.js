@@ -4,6 +4,8 @@ import CommentIcon from 'react-icons/lib/fa/comments';
 import serializeForm from 'form-serialize';
 import * as Helpers from '../utils/helpers';
 import * as ReadableAPI from '../utils/ReadableAPI';
+import { connect } from 'react-redux';
+import  { addComment } from '../actions/index';
 
 class CreateComment extends Component {
   handleSubmit = (e) => {
@@ -22,8 +24,13 @@ class CreateComment extends Component {
 
   createNewComment = (values_to_post) => {
     ReadableAPI.createNewComment(values_to_post)
-                .then(data => (console.log('createNewPost successful...' + JSON.stringify(data) )))
+                .then(data => (this.updateCommentCreate(data)))
   }
+
+  updateCommentCreate = (data) => {
+    this.props.addComment(data)
+  }
+
 
   render () {
     const count_comments = this.props.post_id
@@ -33,7 +40,7 @@ class CreateComment extends Component {
         <div className="create-comment-wrap">
           <form  onSubmit={this.handleSubmit}>
             <input type="text" name="author" placeholder="add author.." className="form-input-comment" />
-            <input type="text" name="body" placeholder="add comment.." className="form-input-comment" />
+            <textarea type="text" name="body" placeholder="add comment.." className="form-input-comment" />
             <button className="form-input-button-comment">Comment</button>
           </form>
         </div>
@@ -42,4 +49,10 @@ class CreateComment extends Component {
   }
 }
 
-export default CreateComment;
+const mapDispatchToProps = dispatch => {
+  return {
+    addComment: (data) => dispatch(addComment(data))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(CreateComment);

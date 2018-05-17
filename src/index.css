@@ -398,7 +398,9 @@ option {
 }
 
 .create-comment-wrap {
-  padding: 5px;
+  
+  display: flex;
+  align-items: center;
 }
 
 .form-input-comment {
@@ -408,5 +410,6 @@ option {
 .form-input-button-comment {
   margin-left: 5px;
 }
+
 
 

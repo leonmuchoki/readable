@@ -5,7 +5,7 @@ import Moment from 'react-moment';
 import PostComment from './PostComment';
 import PostVote from './PostVote';
 import UpVoteIcon from 'react-icons/lib/fa/hand-o-up';
-import Comments from './Comments';
+import CommentsContainer from '../containers/CommentsContainer';
 import * as Helpers from '../utils/helpers';
 
 class PostDetail extends Component {
@@ -33,7 +33,7 @@ class PostDetail extends Component {
     const comment_count = post_details["commentCount"]
     const vote_count = post_details["voteScore"]
     const post_id = this.props.match.params.id
-    console.log('postdetails...' + JSON.stringify(post_details))
+    //console.log('postdetails...' + JSON.stringify(post_details))
 
     return (
       <div className="post-detail">
@@ -50,7 +50,7 @@ class PostDetail extends Component {
           <PostVote countVotes={vote_count} />
         </div>
         <div>
-            <Comments postId={post_id} />
+            <CommentsContainer postId={post_id} />
         </div>
       </div>
     )
