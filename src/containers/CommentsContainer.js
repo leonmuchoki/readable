@@ -34,13 +34,19 @@ class CommentsContainer extends Component {
     return comments//.filter((c)=>(c.parentId === parentId))
   }
 
+  voteOnComment = (commentId,option) => {
+    const post_body = {option: option}
+    ReadableAPI.voteOnComment(commentId,post_body)
+      .then((data)=>(console.log('voteONComment' + JSON.stringify(data))))
+  }
+
   render() {
     const post_comments = this.getParentComments()//this.props.comments;//this.state.post_comments
     const post_id = this.props.postId;
 
     return (
       <div>
-        <Comments comments={post_comments} postId={post_id} />
+        <Comments comments={post_comments} postId={post_id} voteOnComment={this.voteOnComment} />
       </div>
     )
   }

@@ -47,7 +47,7 @@ class PostDetail extends Component {
         </div>
         <div className="post-detail-footer">
           <PostComment countComments={comment_count} />
-          <PostVote countVotes={vote_count} />
+          <PostVote countVotes={vote_count} postId={post_id} />
         </div>
         <div>
             <CommentsContainer postId={post_id} />

@@ -411,5 +411,13 @@ option {
   margin-left: 5px;
 }
 
+.post-detail-vote-wrap {
+  display: flex;
+}
+
+.post-detail-comment-votes {
+  font-weight: 300;
+}
+
 
 

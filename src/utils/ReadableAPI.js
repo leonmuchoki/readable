@@ -54,7 +54,7 @@ export const createNewPost = (post_body) =>
     .then(res => res.json())
     .then(data => data)
 
-// 
+// POST NEW COMMENT
 export const createNewComment = (post_body) => 
   fetch(`${api}/comments`, { 
     method: 'POST',
@@ -63,6 +63,32 @@ export const createNewComment = (post_body) =>
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(post_body) 
+  })
+    .then(res => res.json())
+    .then(data => data)
+
+// UPVOTE POST
+export const voteOnPost = (postId, post_body) => 
+  fetch(`${api}/posts/${postId}`, { 
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(post_body)
+  })
+    .then(res => res.json())
+    .then(data => data)
+
+// UPVOTE COMMENT
+export const voteOnComment = (postId, post_body) => 
+  fetch(`${api}/comments/${postId}`, { 
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(post_body)
   })
     .then(res => res.json())
     .then(data => data)
