@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import * as ReadableAPI from '../utils/ReadableAPI';
-import Posts from '../components/Posts'
+import Posts from '../components/Posts';
+import { getPosts } from '../actions/index';
+//import { getPost } from '../utils/ReadableAPI';
+
 
 class PostsContainer extends Component {
   state = {
@@ -9,13 +13,16 @@ class PostsContainer extends Component {
   }
 
   componentDidMount() {
-    this.getDefaultPosts();
+    const fetched = this.props.fetched
+    console.log('componentDidMount fetched::' + fetched)
+    if (fetched === undefined || fetched === false) {
+      this.getDefaultPosts();
+    }
   }
 
   getDefaultPosts = () => {
     ReadableAPI.getAllPosts()
                 .then((data)=> {
-                  //this.allPosts(data)
                   var posts = []
                   data.map((d)=> (
                     posts.push({
@@ -23,20 +30,40 @@ class PostsContainer extends Component {
                       id: d["id"]
                     })
                   ))
+                  const all_posts = {allPosts: posts}
+                  const fetched = true
+                  this.props.getPosts(all_posts)
                   this.setState({allPosts: posts})
+                  console.log('all_posts-----' + JSON.stringify(this.state.allPosts))
                 })  
-    //console.log('all_maposts' + all_posts)     
+      
   }
 
   render() {
+    const allPostsReducer = this.props.allPostsReducer
+    console.log('allPostsReducer======' + JSON.stringify(allPostsReducer))
     return (
       <div>
-        <Posts allPosts={this.state.allPosts} />
+        <Posts allPosts={allPostsReducer} />
       </div>
     )
   }
 }
 
+const mapStateToProps = ({allPosts}) => {
+  console.log('mapStateToProps::allPosts: ' + JSON.stringify(allPosts))
+  console.log('mapStateToProps::fetched: ' + allPosts.fetched)
+  return { 
+           allPostsReducer: allPosts.allPosts,
+           fetched: allPosts.fetched
+         }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getPosts: posts => dispatch(getPosts(posts))
+  }
+}
 
 
-export default PostsContainer
+export default connect(mapStateToProps, mapDispatchToProps)(PostsContainer)

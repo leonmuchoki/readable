@@ -1,4 +1,6 @@
-import { ADD_COMMENT,GET_POSTS } from '../actions';
+import { combineReducers } from 'redux'
+
+import { ADD_COMMENT, GET_POSTS } from '../actions';
 
 const initialStateComments = {
   comments: {}
@@ -33,13 +35,23 @@ function comment(state=initialStateComments, action) {
   }
 }
 
-function post(state={}, action) {
+const postsInitialState = {
+  allPosts: [],
+  fetched: false
+}
+
+function allPosts(state=postsInitialState, action) {
   switch(action.type) {
     case GET_POSTS:
-      return state
+      console.log('reducer post::' + JSON.stringify(action.allPosts))
+      const all_posts = [...state.allPosts, ...action.allPosts]
+      return Object.assign({},state,{ allPosts: action.allPosts, fetched: true })
     default:
       return state
   }
 }
 
-export default comment
+export default combineReducers({
+  comment,
+  allPosts
+})

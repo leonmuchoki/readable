@@ -9,7 +9,7 @@ class CommentsContainer extends Component {
   
   componentDidMount() {
     const {postId, fetched} = this.props
-    console.log('componentDidMount..' + fetched)
+    //console.log('componentDidMount..' + fetched)
     this.getPostComments(postId)
   }
 
@@ -24,7 +24,7 @@ class CommentsContainer extends Component {
                 .then((data)=> {
                   const post_comments = {}
                   post_comments[postId] = {comments: data, fetched: true}
-                  console.log('fetchComments<<>>' + JSON.stringify(post_comments))
+                  //console.log('fetchComments<<>>' + JSON.stringify(post_comments))
                   addComment(post_comments)
                 })
   }
@@ -43,7 +43,7 @@ class CommentsContainer extends Component {
           });
     }
     
-    console.log(' getParentComments...' + JSON.stringify(post_comment));
+    //console.log(' getParentComments...' + JSON.stringify(post_comment));
     return post_comment//.filter((c)=>(c.parentId === parentId))
   }
 
@@ -78,7 +78,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 const mapStateToProps = ({comments}) => {
-  console.log('mapStateToProps::' + JSON.stringify(comments))
+  //console.log('mapStateToProps::' + JSON.stringify(comments))
   return { 
            all_comments: comments
          }
