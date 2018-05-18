@@ -22,16 +22,29 @@ class CommentsContainer extends Component {
     const {addComment} = this.props
     ReadableAPI.getPostComments(postId)
                 .then((data)=> {
-                  //this.setState({post_comments: data})
-                  addComment(data)
+                  const post_comments = {}
+                  post_comments[postId] = {comments: data, fetched: true}
+                  console.log('fetchComments<<>>' + JSON.stringify(post_comments))
+                  addComment(post_comments)
                 })
   }
 
   getParentComments = () => {
-    const parentId = this.props.postId
-    const comments = this.props.comments
-    //console.log(' getParentComments...' + JSON.stringify(comments));
-    return comments//.filter((c)=>(c.parentId === parentId))
+    const {postId, all_comments} = this.props
+    let post_comment = []
+    if (all_comments !== undefined) {
+      Object.keys(all_comments)
+          .forEach(function eachKey(key) { 
+            if (key==postId){
+              post_comment = [...post_comment,...all_comments[key]["comments"]]
+              //post_comment.push(all_comments[key]["comments"])           
+            }
+            //alert(comments[key]); // alerts value
+          });
+    }
+    
+    console.log(' getParentComments...' + JSON.stringify(post_comment));
+    return post_comment//.filter((c)=>(c.parentId === parentId))
   }
 
   voteOnComment = (commentId,option) => {
@@ -43,10 +56,11 @@ class CommentsContainer extends Component {
   render() {
     const post_comments = this.getParentComments()//this.props.comments;//this.state.post_comments
     const post_id = this.props.postId;
-
+    const addComment = this.props.addComment;
+    
     return (
       <div>
-        <Comments comments={post_comments} postId={post_id} voteOnComment={this.voteOnComment} />
+        <Comments comments={post_comments} postId={post_id} voteOnComment={this.voteOnComment} addComment={addComment} />
       </div>
     )
   }
@@ -56,29 +70,6 @@ CommentsContainer.propTypes = {
   postId: PropTypes.string.isRequired
 }
 
-const retrieveComments = (comments) => {
-  //const comment_data = Object.values(comments)//Object.entries(comments)[0]//Object.values(comments)
-  let comment_data = []
-  Object.keys(comments)
-  .forEach(function eachKey(key) { 
-    if (key=="comments"){
-      comment_data = [...comments[key],...comment_data]
-      console.log('retrieveComments..keys.' + JSON.stringify(comment_data))     
-    }
-    //alert(comments[key]); // alerts value
-  });
-  
-  return comment_data
-}
-
-const retrieveStatus = (fetched) => {
-  Object.keys(fetched)
-  .forEach(function eachKey(key) { 
-    if (key=="fetched"){
-      return fetched[key]
-    }
-  });
-} 
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -86,9 +77,10 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-const mapStateToProps = ({comments, fetched}) => {
-  return { comments: retrieveComments(comments),
-           fetched: retrieveStatus(comments)
+const mapStateToProps = ({comments}) => {
+  console.log('mapStateToProps::' + JSON.stringify(comments))
+  return { 
+           all_comments: comments
          }
 }
 

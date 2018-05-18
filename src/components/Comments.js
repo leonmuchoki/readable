@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import CreateComment from './CreateComment';
 import CommentDetail from './CommentDetail';
 
-const Comments = ({comments, postId,voteOnComment}) => (
+const Comments = ({comments, postId,voteOnComment,addComment}) => (
   <div className="comments-wrap">
         <div className="comments-contents-wrap">
-          <CreateComment post_id={postId} />
+          <CreateComment postId={postId} addComment={addComment} />
           {comments.length > 0 && (<CommentDetail comments={comments} voteOnComment={voteOnComment} />)}
           
         </div>
@@ -16,7 +16,8 @@ const Comments = ({comments, postId,voteOnComment}) => (
 Comments.propTypes = {
   comments: PropTypes.array.isRequired,
   postId: PropTypes.string.isRequired,
-  voteOnComment: PropTypes.func.isRequired
+  voteOnComment: PropTypes.func.isRequired,
+  addComment: PropTypes.func.isRequired
 }
 
 export default Comments;

@@ -1,26 +1,25 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-class Posts extends Component {
-  
-  render () {
-    const dP = this.props.allPosts;
-    return (
-      <div className='posts-wrap'>
-        <ul>
-          {dP.map((p, index)=>(
-            <div className="post-item" key={index}>
-              <li key={index} className="header-post-item">
-                <Link to={`/post/${ p["id"] }`} key={index}>
-                  {p["title"]}
-                </Link>
-              </li>
-            </div>
-          ))}
-        </ul>
-      </div>
-    )
-  }
+const Posts = ({allPosts}) => (
+  <div className='posts-wrap'>
+    <ul>
+      {allPosts !== undefined && allPosts.map((p, index)=>(
+        <div className="post-item" key={index}>
+          <li key={index} className="header-post-item">
+            <Link to={`/post/${ p["id"] }`} key={index}>
+              {p["title"]}
+            </Link>
+          </li>
+        </div>
+      ))}
+    </ul>
+  </div>
+)
+
+Posts.propTypes = {
+  allPosts: PropTypes.array.isRequired
 }
 
 export default Posts;
