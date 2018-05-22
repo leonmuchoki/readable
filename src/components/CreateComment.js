@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import CommentIcon from 'react-icons/lib/fa/comments';
+//import { Link } from 'react-router-dom';
+//import CommentIcon from 'react-icons/lib/fa/comments';
 import serializeForm from 'form-serialize';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+//import { connect } from 'react-redux';
 
 import * as Helpers from '../utils/helpers';
 import * as ReadableAPI from '../utils/ReadableAPI';
-import  { addComment } from '../actions/index';
+//import  { addComment } from '../actions/index';
 
 class CreateComment extends Component {
   state = {
@@ -39,11 +39,9 @@ class CreateComment extends Component {
     this.setState({author: '', body: ''})
   }
 
-  onCommentCreate = (data,parentId) => {
-    const post_comments = {}
-    post_comments[parentId] = {comments: data, fetched: true}
-    console.log('updateCommentCreate>>>' + JSON.stringify(post_comments))
-    this.props.addComment(data)
+  onCommentCreate = (comments,postIdComment) => {
+    //console.log('updateCommentCreate>>>' + ' postId::' + postIdComment + '----' + JSON.stringify(comments))
+    this.props.addComment({comments, postIdComment})
   }
 
   render () {

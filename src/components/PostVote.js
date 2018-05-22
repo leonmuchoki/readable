@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import UpVoteIcon from 'react-icons/lib/fa/hand-o-up';
 import DownVoteIcon from 'react-icons/lib/fa/hand-o-down';
+
 import * as ReadableAPI from '../utils/ReadableAPI';
 
 class PostVote extends Component {
@@ -9,7 +11,7 @@ class PostVote extends Component {
   votePost = (postId,option) => {
     const post_body = {option: option}
     ReadableAPI.voteOnPost(postId,post_body)
-                .then((data)=>(console.log('upvote data...' + JSON.stringify(data))))
+                .then((data)=>{})
   }
 
   render () {
@@ -36,6 +38,11 @@ class PostVote extends Component {
       </div>
     )
   }
+}
+
+PostVote.propTypes = {
+  postId: PropTypes.string.isRequired,
+  countVotes: PropTypes.number
 }
 
 export default PostVote;

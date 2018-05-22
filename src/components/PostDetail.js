@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import * as ReadableAPI from '../utils/ReadableAPI';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import PostComment from './PostComment';
 import PostVote from './PostVote';
-import UpVoteIcon from 'react-icons/lib/fa/hand-o-up';
+//import UpVoteIcon from 'react-icons/lib/fa/hand-o-up';
 import CommentsContainer from '../containers/CommentsContainer';
 import * as Helpers from '../utils/helpers';
 
@@ -28,7 +28,7 @@ class PostDetail extends Component {
   }
 
   render () {
-    const categories = this.props.categories
+    //const categories = this.props.categories
     const post_details = this.state.post_details
     const comment_count = post_details["commentCount"]
     const vote_count = post_details["voteScore"]

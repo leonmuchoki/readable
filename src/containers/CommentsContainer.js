@@ -1,60 +1,74 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import * as ReadableAPI from '../utils/ReadableAPI';
 import Comments from '../components/Comments';
-import PropTypes from 'prop-types';
-import { addComment } from '../actions/index';
+import { getComments, addComment } from '../actions/index';
 
 class CommentsContainer extends Component {
-  
+
   componentDidMount() {
-    const {postId, fetched} = this.props
-    //console.log('componentDidMount..' + fetched)
-    this.getPostComments(postId)
+    const { postId } = this.props
+    this.getPostComments(postId)   
   }
 
   getPostComments = (post_id) => {
-    const {postId} = this.props
-    this.fetchComments(postId)
+    const { postId, comments } = this.props
+    if (comments.comments.length > 0) {
+      //console.log('checkIfFetched... ..YES SIR: ' + postId)
+    } else {
+      //console.log('checkIfFetched... ..NO SIR: ' + postId)
+      this.fetchComments(postId)
+    } 
   }
 
   fetchComments = (postId) => {
-    const {addComment} = this.props
     ReadableAPI.getPostComments(postId)
-                .then((data)=> {
-                  const post_comments = {}
-                  post_comments[postId] = {comments: data, fetched: true}
-                  //console.log('fetchComments<<>>' + JSON.stringify(post_comments))
-                  addComment(post_comments)
-                })
+      .then((data)=> {
+        //console.log('fecthcomments on a sunday ' + JSON.stringify(data))
+        const comments = {comments: data}
+        this.saveComments(data)
+      })
+  }
+
+  saveComments = (comments) => {
+    const getComments = this.props.getComments
+    const postIdComment = this.props.postId
+    //console.log('saveComments on a monday---->' + postIdComment)
+    if (comments !== undefined && comments.length > 0) {
+      getComments({comments, postIdComment})
+    }
   }
 
   getParentComments = () => {
-    const {postId, all_comments} = this.props
-    let post_comment = []
-    if (all_comments !== undefined) {
-      Object.keys(all_comments)
-          .forEach(function eachKey(key) { 
-            if (key==postId){
-              post_comment = [...post_comment,...all_comments[key]["comments"]]
-              //post_comment.push(all_comments[key]["comments"])           
-            }
-            //alert(comments[key]); // alerts value
-          });
+    const { comments, postId } = this.props
+    let post_comments = []
+    if (comments !== undefined) { //comments.hasOwnProperty(postId)
+      Object.keys(comments)
+            .forEach(function eachKey(key) { 
+              //console.log('comments key***' + key)
+                if (key === "comments" ) {
+                  post_comments = comments.comments.filter((cmm) => {
+                    //console.log('cmm***' + cmm.parentId)
+                    return cmm.parentId === postId
+                  })
+                }
+            });
     }
-    
-    //console.log(' getParentComments...' + JSON.stringify(post_comment));
-    return post_comment//.filter((c)=>(c.parentId === parentId))
+    //console.log(' getParentComments...YER SIR' + postId + ' COMMENTS:: ' + JSON.stringify(post_comments));
+    return post_comments//.filter((c)=>(c.parentId === parentId))
   }
 
   voteOnComment = (commentId,option) => {
     const post_body = {option: option}
     ReadableAPI.voteOnComment(commentId,post_body)
-      .then((data)=>(console.log('voteONComment' + JSON.stringify(data))))
+      .then((data)=>{})
   }
 
   render() {
-    const post_comments = this.getParentComments()//this.props.comments;//this.state.post_comments
+    let post_comments = []
+    post_comments = this.getParentComments()//this.props.comments;//this.state.post_comments
     const post_id = this.props.postId;
     const addComment = this.props.addComment;
     
@@ -73,14 +87,16 @@ CommentsContainer.propTypes = {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addComment: comment => dispatch(addComment(comment))
+    getComments: comments => dispatch(getComments(comments)), 
+    addComment: comments => dispatch(addComment(comments))
   }
 }
 
-const mapStateToProps = ({comments}) => {
-  //console.log('mapStateToProps::' + JSON.stringify(comments))
+const mapStateToProps = ({comments, postIdComment}) => {
+  //console.log('mapStateToProps::comments' + JSON.stringify(comments) + '----postidComment::' + comments.postIdComment)
   return { 
-           all_comments: comments
+           comments: comments,
+           postIdComment: postIdComment
          }
 }
 

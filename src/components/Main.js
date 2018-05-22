@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import LeftSideBar from './LeftSideBar';
-import Posts from './Posts';
+//import Posts from './Posts';
 import PostsContainer from '../containers/PostsContainer';
 import PostDetail from './PostDetail';
 import CategoryPosts from './CategoryPosts';
 import CreatePost from './CreatePost';
-import * as ReadableAPI from '../utils/ReadableAPI';
+//import * as ReadableAPI from '../utils/ReadableAPI';
 
 class Main extends Component {
 

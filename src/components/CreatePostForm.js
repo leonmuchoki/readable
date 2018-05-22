@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import serializeForm from 'form-serialize';
-import { connect } from 'react-redux';
-
 import * as Helpers from '../utils/helpers';
 import * as ReadableAPI from '../utils/ReadableAPI';
-//import { createNewPost } from '../utils/ReadableAPI';
-import { addNewPost } from '../actions/index'
+import { createNewPost } from '../utils/ReadableAPI';
 
 class CreatePost extends Component {
   
@@ -23,12 +20,8 @@ class CreatePost extends Component {
 
   createNewPost = (values_to_post) => {
     ReadableAPI.createNewPost(values_to_post)
-                .then(data => {
-                  console.log('createNewPost..' + JSON.stringify(data))
-                  this.props.addNewPost(data)
-                })
-                
-    //this.props.history.push("/");
+                .then(data => (console.log('createNewPost successful...' + JSON.stringify(data) )))
+                this.props.history.push("/");
   }
 
   render() {
@@ -60,10 +53,4 @@ class CreatePost extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addNewPost: post => dispatch(addNewPost(post))
-  }
-}
-
-export default connect(null, mapDispatchToProps)(CreatePost)
+export default CreatePost

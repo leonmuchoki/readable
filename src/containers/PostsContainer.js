@@ -8,51 +8,39 @@ import { getPosts } from '../actions/index';
 
 
 class PostsContainer extends Component {
-  state = {
-    allPosts: []
-  }
-
+  
   componentDidMount() {
-    const fetched = this.props.fetched
-    console.log('componentDidMount fetched::' + fetched)
-    if (fetched === undefined || fetched === false) {
       this.getDefaultPosts();
-    }
   }
 
   getDefaultPosts = () => {
-    ReadableAPI.getAllPosts()
+    const { allPostsReducer } = this.props
+    if (allPostsReducer === undefined || allPostsReducer.length <= 0) {
+      ReadableAPI.getAllPosts()
                 .then((data)=> {
-                  var posts = []
-                  data.map((d)=> (
-                    posts.push({
-                      title: d["title"],
-                      id: d["id"]
-                    })
-                  ))
-                  const all_posts = {allPosts: posts}
-                  const fetched = true
-                  this.props.getPosts(all_posts)
-                  this.setState({allPosts: posts})
-                  console.log('all_posts-----' + JSON.stringify(this.state.allPosts))
+                  const allPosts = {allPosts: data}
+                  this.props.getPosts(allPosts)
                 })  
+    }  
       
   }
 
   render() {
-    const allPostsReducer = this.props.allPostsReducer
-    console.log('allPostsReducer======' + JSON.stringify(allPostsReducer))
+    const allPosts = this.props.allPostsReducer
+    //console.log('allPostsReducer======' + JSON.stringify(allPosts))
     return (
       <div>
-        <Posts allPosts={allPostsReducer} />
+        {allPosts.length > 0 
+           ? <Posts allPosts={allPosts} />
+           : null }
       </div>
     )
   }
 }
 
 const mapStateToProps = ({allPosts}) => {
-  console.log('mapStateToProps::allPosts: ' + JSON.stringify(allPosts))
-  console.log('mapStateToProps::fetched: ' + allPosts.fetched)
+ // console.log('mapStateToProps::allPosts: ' + JSON.stringify(allPosts))
+ // console.log('mapStateToProps::fetched: ' + allPosts.fetched)
   return { 
            allPostsReducer: allPosts.allPosts,
            fetched: allPosts.fetched
@@ -64,6 +52,5 @@ const mapDispatchToProps = dispatch => {
     getPosts: posts => dispatch(getPosts(posts))
   }
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostsContainer)
