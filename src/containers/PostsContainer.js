@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import Loading from 'react-loading';
 
 import * as ReadableAPI from '../utils/ReadableAPI';
 import Posts from '../components/Posts';
 import { getPosts } from '../actions/index';
-//import { getPost } from '../utils/ReadableAPI';
+import { postsFetchData } from '../actions/index';
 
 
 class PostsContainer extends Component {
@@ -14,42 +16,51 @@ class PostsContainer extends Component {
   }
 
   getDefaultPosts = () => {
-    const { allPostsReducer } = this.props
-    if (allPostsReducer === undefined || allPostsReducer.length <= 0) {
-      ReadableAPI.getAllPosts()
+    const { allPosts } = this.props
+    if (allPosts === undefined || allPosts.length <= 0) {
+      this.props.fetchData()
+      /* ReadableAPI.getAllPosts()
                 .then((data)=> {
                   const allPosts = {allPosts: data}
                   this.props.getPosts(allPosts)
-                })  
+                })   */
     }  
       
   }
 
   render() {
-    const allPosts = this.props.allPostsReducer
+    const { allPosts, isLoading } = this.props
     //console.log('allPostsReducer======' + JSON.stringify(allPosts))
     return (
       <div>
-        {allPosts.length > 0 
-           ? <Posts allPosts={allPosts} />
-           : null }
+        {isLoading === true 
+           ? <Loading delay={200} type='spin' color='#222' className="loading-spinner" />
+           : <Posts allPosts={allPosts} /> }
       </div>
     )
   }
 }
 
-const mapStateToProps = ({allPosts}) => {
- // console.log('mapStateToProps::allPosts: ' + JSON.stringify(allPosts))
+PostsContainer.propTypes = {
+  fetchData: PropTypes.func.isRequired,
+  allPosts: PropTypes.array,
+  hasErrored: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired
+}
+
+const mapStateToProps = (state) => {
+ console.log('mapStateToProps::allPosts:state-- ' + JSON.stringify(state))
  // console.log('mapStateToProps::fetched: ' + allPosts.fetched)
   return { 
-           allPostsReducer: allPosts.allPosts,
-           fetched: allPosts.fetched
+           allPosts: state.allPosts.allPosts,
+           isLoading: state.postsIsLoading,
+           hasErrored: state.postsHasErrored
          }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getPosts: posts => dispatch(getPosts(posts))
+    fetchData: () => dispatch(postsFetchData())
   }
 }
 

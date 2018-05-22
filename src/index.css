@@ -419,5 +419,8 @@ option {
   font-weight: 300;
 }
 
-
+.loading-spinner {
+  align-self: center;
+  margin: 0 auto;
+}
 
