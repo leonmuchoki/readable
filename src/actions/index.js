@@ -7,6 +7,7 @@ export const ADD_NEW_POST = 'ADD_NEW_POST'
 export const POSTS_HAS_ERRORED = 'POSTS_HAS_ERRORED'
 export const POSTS_IS_LOADING = 'POSTS_IS_LOADING'
 export const POSTS_FETCH_DATA_SUCCESS = 'POSTS_FETCH_DATA_SUCCESS'
+export const UPDATE_POST_COMMENT_COUNT = 'UPDATE_POST_COMMENT_COUNT'
 
 export function getComments({comments, postIdComment}) { //{id,timestamp,body,author,parentId,voteScore,deleted,parentDeleted}
  return {
@@ -22,6 +23,14 @@ export function addComment({comments, postIdComment}) { //{id,timestamp,body,aut
   comments,
   postIdComment
  }
+}
+
+export function updatePostCommentCount(postId,commentCount) {
+  return {
+    type: UPDATE_POST_COMMENT_COUNT,
+    postId,
+    commentCount
+  }
 }
 
 export function getPosts({allPosts}) {
@@ -69,10 +78,13 @@ export function postsFetchData() {
                   dispatch(postsIsLoading(false));
                   return response
                 })
-                .then((data)=> dispatch(postsFetchDataSuccess(data)))
+                .then((data)=> {
+                  const allPosts = {allPosts: data}
+                  dispatch(postsFetchDataSuccess(data))
+                })
                 .then((data)=> {
                     const allPosts = {allPosts: data}
-                    dispatch(getPosts(allPosts))
+                    //dispatch(getPosts(allPosts))
                 })
                 .catch(()=> dispatch(postsHasErrored(true)))  
   }

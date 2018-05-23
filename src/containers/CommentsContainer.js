@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Loading from 'react-loading';
 
 import * as ReadableAPI from '../utils/ReadableAPI';
 import Comments from '../components/Comments';
 import { getComments, addComment } from '../actions/index';
+import { commentsFetchData } from '../actions/comments';
 
 class CommentsContainer extends Component {
 
@@ -14,31 +16,10 @@ class CommentsContainer extends Component {
   }
 
   getPostComments = (post_id) => {
-    const { postId, comments } = this.props
-    if (comments.comments.length > 0) {
-      //console.log('checkIfFetched... ..YES SIR: ' + postId)
-    } else {
-      //console.log('checkIfFetched... ..NO SIR: ' + postId)
-      this.fetchComments(postId)
-    } 
-  }
-
-  fetchComments = (postId) => {
-    ReadableAPI.getPostComments(postId)
-      .then((data)=> {
-        //console.log('fecthcomments on a sunday ' + JSON.stringify(data))
-        const comments = {comments: data}
-        this.saveComments(data)
-      })
-  }
-
-  saveComments = (comments) => {
-    const getComments = this.props.getComments
-    const postIdComment = this.props.postId
-    //console.log('saveComments on a monday---->' + postIdComment)
-    if (comments !== undefined && comments.length > 0) {
-      getComments({comments, postIdComment})
-    }
+    const { postId, postCommentsFetched } = this.props
+    if ( postCommentsFetched.isFetched === false || postCommentsFetched.postId !== postId) {
+      this.props.fetchData(postId)
+    }  
   }
 
   getParentComments = () => {
@@ -69,34 +50,41 @@ class CommentsContainer extends Component {
   render() {
     let post_comments = []
     post_comments = this.getParentComments()//this.props.comments;//this.state.post_comments
-    const post_id = this.props.postId;
-    const addComment = this.props.addComment;
+    const {postId, isLoading, addComment} = this.props;
     
     return (
       <div>
-        <Comments comments={post_comments} postId={post_id} voteOnComment={this.voteOnComment} addComment={addComment} />
+        {isLoading === true
+         ? <Loading delay={200} type='spin' color='#222' className="loading-spinner" />
+         : <Comments comments={post_comments} postId={postId} voteOnComment={this.voteOnComment} addComment={addComment} />
+         } 
       </div>
     )
   }
 }
 
 CommentsContainer.propTypes = {
-  postId: PropTypes.string.isRequired
+  postId: PropTypes.string.isRequired,
+  fetchData: PropTypes.func.isRequired,
+  postCommentsFetched: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired
 }
-
 
 const mapDispatchToProps = dispatch => {
   return {
     getComments: comments => dispatch(getComments(comments)), 
-    addComment: comments => dispatch(addComment(comments))
+    addComment: comments => dispatch(addComment(comments)),
+    fetchData:  postId => dispatch(commentsFetchData(postId))
   }
 }
 
-const mapStateToProps = ({comments, postIdComment}) => {
-  //console.log('mapStateToProps::comments' + JSON.stringify(comments) + '----postidComment::' + comments.postIdComment)
+const mapStateToProps = (state) => {
+  console.log('mapStateToProps::comments' + JSON.stringify(state) + '----postidComment::' + state.commentsIsLoading)
   return { 
-           comments: comments,
-           postIdComment: postIdComment
+           comments: state.comments,//comments,
+           postIdComment: '',//postIdComment
+           postCommentsFetched: state.postCommentsFetched,
+           isLoading: state.commentsIsLoading
          }
 }
 

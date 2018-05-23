@@ -49,8 +49,8 @@ PostsContainer.propTypes = {
 }
 
 const mapStateToProps = (state) => {
- console.log('mapStateToProps::allPosts:state-- ' + JSON.stringify(state))
- // console.log('mapStateToProps::fetched: ' + allPosts.fetched)
+ //console.log('mapStateToProps::allPosts:state-- ' + JSON.stringify(state.allPosts))
+  //console.log('mapStateToProps::fetched: ' + allPosts.fetched)
   return { 
            allPosts: state.allPosts.allPosts,
            isLoading: state.postsIsLoading,
