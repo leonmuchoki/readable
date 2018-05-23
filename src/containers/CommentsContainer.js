@@ -30,10 +30,16 @@ class CommentsContainer extends Component {
             .forEach(function eachKey(key) { 
               //console.log('comments key***' + key)
                 if (key === "comments" ) {
-                  post_comments = comments.comments.filter((cmm) => {
-                    //console.log('cmm***' + cmm.parentId)
-                    return cmm.parentId === postId
-                  })
+                  let comments_arr = comments.comments
+                  if (comments_arr !== undefined && comments_arr.length > 0) {
+                    post_comments = comments_arr.filter((cmm) => {
+                      console.log('cmm***' + JSON.stringify(cmm))
+                      if (cmm !== undefined) {
+                        return cmm.parentId === postId
+                      }
+                      
+                    })
+                  }
                 }
             });
     }
@@ -57,7 +63,7 @@ class CommentsContainer extends Component {
         {isLoading === true
          ? <Loading delay={200} type='spin' color='#222' className="loading-spinner" />
          : <Comments comments={post_comments} postId={postId} voteOnComment={this.voteOnComment} addComment={addComment} />
-         } 
+        } 
       </div>
     )
   }
@@ -79,7 +85,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 const mapStateToProps = (state) => {
-  console.log('mapStateToProps::comments' + JSON.stringify(state) + '----postidComment::' + state.commentsIsLoading)
+  //console.log('mapStateToProps::comments' + JSON.stringify(state) + '----postidComment::' + state.commentsIsLoading)
   return { 
            comments: state.comments,//comments,
            postIdComment: '',//postIdComment

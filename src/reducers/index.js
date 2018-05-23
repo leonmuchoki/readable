@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux'
 
-import { ADD_COMMENT, GET_POSTS, ADD_NEW_POST, GET_COMMENTS,POSTS_FETCH_DATA_SUCCESS,
-  POSTS_IS_LOADING,POSTS_HAS_ERRORED } from '../actions/index';
-import { COMMENTS_IS_LOADING,COMMENTS_HAS_ERRORED,COMMENTS_FETCH_DATA_SUCCESS,POST_COMMENTS_FETCHED } from '../actions/comments';
+import { GET_POSTS, ADD_NEW_POST, GET_COMMENTS,POSTS_FETCH_DATA_SUCCESS,
+         POSTS_IS_LOADING,POSTS_HAS_ERRORED } from '../actions/index';
+import { COMMENTS_IS_LOADING,COMMENTS_HAS_ERRORED,COMMENTS_FETCH_DATA_SUCCESS,
+         POST_COMMENTS_FETCHED, COMMENT_IS_POSTING,ADD_COMMENT } from '../actions/comments';
 
 
 //----COMMENTS
@@ -25,6 +26,17 @@ export function commentsIsLoading(state = false, action) {
       return state;
   }
 }
+
+export function commentIsPosting(state = false, action) {
+  switch (action.type) {
+    case COMMENT_IS_POSTING:
+      return action.isPosting; 
+    
+    default:
+      return state;
+  }
+}
+
 
 const postCommentsState = {
   isFetched: false,
@@ -60,13 +72,14 @@ function comments(state=initialStateComments, action) {
           {postIdComment: postIdComment})
     
     case ADD_COMMENT:
-      //console.log('reducer ADD_COMMENT::' + JSON.stringify(comments) + '===postIdComment::' + postIdComment)
+      console.log('reducer ADD_COMMENT::' + JSON.stringify(comments) + '===postIdComment::' + postIdComment)
       return  Object.assign({},state,
         {comments: [
           ...state.comments, comments
         ]},
         {postIdComment: postIdComment})
       //Object.assign({},state,{ comments: comments, postIdComment: postIdComment })
+
     case COMMENTS_FETCH_DATA_SUCCESS:
       console.log('reducer COMMENTS_FETCH_DATA_SUCCESS:: ' + JSON.stringify(comments))
       return Object.assign({},state,
@@ -139,6 +152,7 @@ export default combineReducers({
   commentsIsLoading,
   commentsHasErrored,
   postCommentsFetched,
+  commentIsPosting,
   allPosts,
   postsHasErrored,
   postsIsLoading

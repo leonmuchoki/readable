@@ -6,6 +6,7 @@ export const COMMENTS_HAS_ERRORED = 'COMMENTS_HAS_ERRORED'
 export const COMMENTS_IS_LOADING = 'COMMENTS_IS_LOADING'
 export const COMMENTS_FETCH_DATA_SUCCESS = 'COMMENTS_FETCH_DATA_SUCCESS'
 export const POST_COMMENTS_FETCHED = 'POST_COMMENTS_FETCHED'
+export const COMMENT_IS_POSTING = 'COMMENT_IS_POSTING'
 
 export function getComments({comments, postIdComment}) { //{id,timestamp,body,author,parentId,voteScore,deleted,parentDeleted}
  return {
@@ -15,7 +16,7 @@ export function getComments({comments, postIdComment}) { //{id,timestamp,body,au
  }
 }
 
-export function addComment({comments, postIdComment}) { //{id,timestamp,body,author,parentId,voteScore,deleted,parentDeleted}
+export function addComment(comments, postIdComment) { //{id,timestamp,body,author,parentId,voteScore,deleted,parentDeleted}
  return {
   type: ADD_COMMENT,
   comments,
@@ -76,3 +77,26 @@ export function commentsFetchData(postId) {
   }
 }
 
+// add new comment:
+export function commentIsPosting(bool) {
+  return {
+    type: COMMENT_IS_POSTING,
+    isPosting: bool
+  };
+}
+
+export function postNewCommentData(values_to_post,postIdComment) {
+  return (dispatch) => {
+    dispatch(commentIsPosting(true));
+
+    ReadableAPI.createNewComment(values_to_post)
+                .then((response)=> {
+                  dispatch(commentIsPosting(false));
+                  return response
+                })
+                .then((comments)=> {
+                  dispatch(addComment(comments, postIdComment))
+                })
+                .catch(()=> dispatch(commentsHasErrored(true)))  
+  }
+}

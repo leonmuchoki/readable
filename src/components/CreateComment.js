@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-//import { Link } from 'react-router-dom';
+import Loading from 'react-loading';
 //import CommentIcon from 'react-icons/lib/fa/comments';
 import serializeForm from 'form-serialize';
 import PropTypes from 'prop-types';
-//import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 import * as Helpers from '../utils/helpers';
 import * as ReadableAPI from '../utils/ReadableAPI';
-//import  { addComment } from '../actions/index';
+import  { postNewCommentData } from '../actions/comments';
 
 class CreateComment extends Component {
   state = {
@@ -34,8 +34,9 @@ class CreateComment extends Component {
   }
 
   createNewComment = (values_to_post,parentId) => {
-    ReadableAPI.createNewComment(values_to_post)
-                .then(data => (this.onCommentCreate(data,parentId)))
+    /* ReadableAPI.createNewComment(values_to_post)
+                .then(data => (this.onCommentCreate(data,parentId))) */
+    this.props.postCommentData(values_to_post, parentId)
     this.setState({author: '', body: ''})
   }
 
@@ -51,6 +52,10 @@ class CreateComment extends Component {
     return (
       <div>
         <div className="create-comment-wrap">
+          {this.props.isPosting === true
+           ? <Loading delay={200} type='spin' color='#222' className="loading-spinner" />
+           : null
+          }
           <form  onSubmit={this.handleSubmit}>
             <input type="text" name="author" placeholder="add author.."
                    className="form-input-comment" value={author} onChange={this.handleChange} />
@@ -65,14 +70,24 @@ class CreateComment extends Component {
 }
 
 CreateComment.propTypes = {
-  addComment: PropTypes.func.isRequired,
-  postId: PropTypes.string.isRequired
+  //addComment: PropTypes.func.isRequired,
+  postId: PropTypes.string.isRequired,
+  postCommentData: PropTypes.func.isRequired
+  //isPosting: PropTypes.bool.isRequired
 }
 
-/* const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
-    addComment: (data) => dispatch(addComment(data))
+    //addComment: (data) => dispatch(addComment(data)),
+    postCommentData: (data, postId) => dispatch(postNewCommentData(data, postId))
   }
-} */
+}
 
-export default CreateComment//connect(null, mapDispatchToProps)(CreateComment);
+const mapStateToProps = (state) => {
+  console.log('mapStateToProps::CREATEcomments' + JSON.stringify(state) + '----postidComment::' + state.commentIsPosting)
+  return { 
+           isPosting: state.commentIsPosting
+         }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateComment);
