@@ -5,7 +5,6 @@ import Loading from 'react-loading';
 
 import * as ReadableAPI from '../utils/ReadableAPI';
 import Comments from '../components/Comments';
-import { getComments, addComment } from '../actions/index';
 import { commentsFetchData } from '../actions/comments';
 
 class CommentsContainer extends Component {
@@ -33,7 +32,7 @@ class CommentsContainer extends Component {
                   let comments_arr = comments.comments
                   if (comments_arr !== undefined && comments_arr.length > 0) {
                     post_comments = comments_arr.filter((cmm) => {
-                      console.log('cmm***' + JSON.stringify(cmm))
+                      //console.log('cmm***' + JSON.stringify(cmm))
                       if (cmm !== undefined) {
                         return cmm.parentId === postId
                       }
@@ -78,8 +77,8 @@ CommentsContainer.propTypes = {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getComments: comments => dispatch(getComments(comments)), 
-    addComment: comments => dispatch(addComment(comments)),
+    //getComments: comments => dispatch(getComments(comments)), 
+    //addComment: comments => dispatch(addComment(comments)),
     fetchData:  postId => dispatch(commentsFetchData(postId))
   }
 }

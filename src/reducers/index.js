@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux'
 
-import { GET_POSTS, ADD_NEW_POST, GET_COMMENTS,POSTS_FETCH_DATA_SUCCESS,
-         POSTS_IS_LOADING,POSTS_HAS_ERRORED } from '../actions/index';
-import { COMMENTS_IS_LOADING,COMMENTS_HAS_ERRORED,COMMENTS_FETCH_DATA_SUCCESS,
-         POST_COMMENTS_FETCHED, COMMENT_IS_POSTING,ADD_COMMENT } from '../actions/comments';
+import { GET_POSTS, ADD_NEW_POST, POSTS_FETCH_DATA_SUCCESS,
+         POSTS_IS_LOADING, POSTS_HAS_ERRORED, POSTS_DELETE_SUCCESS } from '../actions/posts';
+import { COMMENTS_IS_LOADING, COMMENTS_HAS_ERRORED, COMMENTS_FETCH_DATA_SUCCESS,
+         POST_COMMENTS_FETCHED, COMMENT_IS_POSTING, ADD_COMMENT, UPDATE_POST_COMMENT_COUNT,
+         GET_COMMENTS } from '../actions/comments';
 
 
 //----COMMENTS
@@ -100,7 +101,7 @@ const postsInitialState = {
 }
 
 function allPosts(state=postsInitialState, action) {
-  const { allPosts, post } = action
+  const { allPosts, post, postId } = action
   switch(action.type) {
     case ADD_NEW_POST:
       return Object.assign({},state,
@@ -109,19 +110,42 @@ function allPosts(state=postsInitialState, action) {
                                   ]})//Object.assign({},state,action.post )//Object.assign({},state,{ ...state.allPosts, ...action.post })
 
     case GET_POSTS:
-      console.log('reducer post::' + JSON.stringify(allPosts))
+      //console.log('reducer post::' + JSON.stringify(allPosts))
       return Object.assign({},state,
                               {allPosts: [
                                 ...state.allPosts, 
                                 ...allPosts]})//Object.assign({},state,{ allPosts: action.allPosts, fetched: true })
 
     case POSTS_FETCH_DATA_SUCCESS:
-    console.log('reducer POSTS_FETCH_DATA_SUCCESS::' + JSON.stringify(allPosts))
-    return Object.assign({},state,
-                            {allPosts: [
-                              ...state.allPosts, 
-                              ...allPosts]})//Object.assign({},state,{ allPosts: action.allPosts, fetched: true })
-                          
+      console.log('reducer POSTS_FETCH_DATA_SUCCESS::' + JSON.stringify(allPosts))
+      return Object.assign({},state,
+                              {allPosts: [
+                                ...state.allPosts, 
+                                ...allPosts]})//Object.assign({},state,{ allPosts: action.allPosts, fetched: true })
+                              
+  /*   case UPDATE_POST_COMMENT_COUNT:
+      let post_updated = state.allPosts.filter((p)=> {
+        return p.id === postId
+      }).map((m) => {
+        m.commentCount = m.commentCount + 1
+      })
+      console.log('UPDATE_POST_COMMENT_COUNT' + JSON.stringify(allPosts))
+      console.log('UPDATE_POST_COMMENT_COUNT-::-::' + JSON.stringify(postId))
+      return state */
+
+    case POSTS_DELETE_SUCCESS:  
+      let newState = state.allPosts.map((m,index)=>{
+        if(m.id === action.allPosts.id) {
+          let n = Object.assign({},m,action.allPosts)
+          return n
+        } else {
+          return m
+        }
+        
+      })
+      //console.log('POSTS_DELETE_SUCCESS:X:' + JSON.stringify(newState))
+      return Object.assign({},state,{allPosts: newState})
+    
     default:
       return state
   }

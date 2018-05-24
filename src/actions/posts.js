@@ -1,29 +1,13 @@
 import * as ReadableAPI from '../utils/ReadableAPI';
 
-export const ADD_COMMENT = 'ADD_COMMENT'
-export const GET_COMMENTS = 'GET_COMMENTS'
 export const GET_POSTS = 'GET_POSTS'
 export const ADD_NEW_POST = 'ADD_NEW_POST'
 export const POSTS_HAS_ERRORED = 'POSTS_HAS_ERRORED'
 export const POSTS_IS_LOADING = 'POSTS_IS_LOADING'
 export const POSTS_FETCH_DATA_SUCCESS = 'POSTS_FETCH_DATA_SUCCESS'
 export const UPDATE_POST_COMMENT_COUNT = 'UPDATE_POST_COMMENT_COUNT'
-
-export function getComments({comments, postIdComment}) { //{id,timestamp,body,author,parentId,voteScore,deleted,parentDeleted}
- return {
-  type: GET_COMMENTS,
-  comments,
-  postIdComment
- }
-}
-
-export function addComment({comments, postIdComment}) { //{id,timestamp,body,author,parentId,voteScore,deleted,parentDeleted}
- return {
-  type: ADD_COMMENT,
-  comments,
-  postIdComment
- }
-}
+export const DELETE_POST = 'DELETE_POST'
+export const POSTS_DELETE_SUCCESS = 'POSTS_DELETE_SUCCESS'
 
 export function updatePostCommentCount(postId,commentCount) {
   return {
@@ -44,6 +28,20 @@ export function addNewPost({post}) {
   return {
     type: ADD_NEW_POST,
     post
+  };
+}
+
+/* export function deletePost(postId) {
+  return {
+    type: DELETE_POST,
+    postId
+  }
+} */
+
+export function postDeleteSuccess(allPosts) {
+  return {
+    type: POSTS_DELETE_SUCCESS,
+    allPosts
   };
 }
 
@@ -79,12 +77,26 @@ export function postsFetchData() {
                   return response
                 })
                 .then((data)=> {
-                  const allPosts = {allPosts: data}
+                  //const allPosts = {allPosts: data}
                   dispatch(postsFetchDataSuccess(data))
                 })
+                .catch(()=> dispatch(postsHasErrored(true)))  
+  }
+}
+
+// delete posts:
+export function postDelete(postId) {
+  return (dispatch) => {
+    dispatch(postsIsLoading(true));
+
+    ReadableAPI.deletePost(postId)
+                .then((response)=> {
+                  dispatch(postsIsLoading(false));
+                  return response
+                })
                 .then((data)=> {
-                    const allPosts = {allPosts: data}
-                    //dispatch(getPosts(allPosts))
+                  console.log('postDeleteSuccess ' + JSON.stringify(data))
+                  dispatch(postDeleteSuccess(data))
                 })
                 .catch(()=> dispatch(postsHasErrored(true)))  
   }

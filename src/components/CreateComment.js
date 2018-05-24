@@ -84,7 +84,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 const mapStateToProps = (state) => {
-  console.log('mapStateToProps::CREATEcomments' + JSON.stringify(state) + '----postidComment::' + state.commentIsPosting)
+  //console.log('mapStateToProps::CREATEcomments' + JSON.stringify(state) + '----postidComment::' + state.commentIsPosting)
   return { 
            isPosting: state.commentIsPosting
          }

@@ -424,3 +424,7 @@ option {
   margin: 0 auto;
 }
 
+.posts-delete-icon {
+  cursor: pointer;
+}
+

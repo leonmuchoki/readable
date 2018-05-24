@@ -7,6 +7,7 @@ export const COMMENTS_IS_LOADING = 'COMMENTS_IS_LOADING'
 export const COMMENTS_FETCH_DATA_SUCCESS = 'COMMENTS_FETCH_DATA_SUCCESS'
 export const POST_COMMENTS_FETCHED = 'POST_COMMENTS_FETCHED'
 export const COMMENT_IS_POSTING = 'COMMENT_IS_POSTING'
+export const UPDATE_POST_COMMENT_COUNT = 'UPDATE_POST_COMMENT_COUNT'
 
 export function getComments({comments, postIdComment}) { //{id,timestamp,body,author,parentId,voteScore,deleted,parentDeleted}
  return {
@@ -85,6 +86,13 @@ export function commentIsPosting(bool) {
   };
 }
 
+export function updatePostCommentCount(postId) {
+  return {
+    type: UPDATE_POST_COMMENT_COUNT,
+    postId
+  }
+}
+
 export function postNewCommentData(values_to_post,postIdComment) {
   return (dispatch) => {
     dispatch(commentIsPosting(true));
@@ -96,6 +104,9 @@ export function postNewCommentData(values_to_post,postIdComment) {
                 })
                 .then((comments)=> {
                   dispatch(addComment(comments, postIdComment))
+                })
+                .then(()=>{
+                  dispatch(updatePostCommentCount(postIdComment))
                 })
                 .catch(()=> dispatch(commentsHasErrored(true)))  
   }

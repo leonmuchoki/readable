@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as Helpers from '../utils/helpers';
 import * as ReadableAPI from '../utils/ReadableAPI';
 //import { createNewPost } from '../utils/ReadableAPI';
-import { addNewPost } from '../actions/index'
+import { addNewPost } from '../actions/posts'
 
 class CreatePost extends Component {
   

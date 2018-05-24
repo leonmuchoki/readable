@@ -5,8 +5,8 @@ import Loading from 'react-loading';
 
 import * as ReadableAPI from '../utils/ReadableAPI';
 import Posts from '../components/Posts';
-import { getPosts } from '../actions/index';
-import { postsFetchData } from '../actions/index';
+//import { getPosts } from '../actions/index';
+import { postsFetchData, postDelete } from '../actions/posts';
 
 
 class PostsContainer extends Component {
@@ -19,23 +19,23 @@ class PostsContainer extends Component {
     const { allPosts } = this.props
     if (allPosts === undefined || allPosts.length <= 0) {
       this.props.fetchData()
-      /* ReadableAPI.getAllPosts()
-                .then((data)=> {
-                  const allPosts = {allPosts: data}
-                  this.props.getPosts(allPosts)
-                })   */
     }  
       
   }
 
+  filterOutDeletedPosts = (allPosts) => {
+    return allPosts.filter((p)=>(p.deleted === false))
+  }
+
   render() {
-    const { allPosts, isLoading } = this.props
-    //console.log('allPostsReducer======' + JSON.stringify(allPosts))
+    const { allPosts, isLoading, deletePost } = this.props
+    let unDeletedPosts = this.filterOutDeletedPosts(allPosts)
+    
     return (
       <div>
         {isLoading === true 
            ? <Loading delay={200} type='spin' color='#222' className="loading-spinner" />
-           : <Posts allPosts={allPosts} /> }
+           : <Posts allPosts={unDeletedPosts} deletePost={deletePost} /> }
       </div>
     )
   }
@@ -45,11 +45,12 @@ PostsContainer.propTypes = {
   fetchData: PropTypes.func.isRequired,
   allPosts: PropTypes.array,
   hasErrored: PropTypes.bool.isRequired,
-  isLoading: PropTypes.bool.isRequired
+  isLoading: PropTypes.bool.isRequired,
+  deletePost: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
- //console.log('mapStateToProps::allPosts:state-- ' + JSON.stringify(state.allPosts))
+ console.log('mapStateToProps::allPosts:state-- ' + JSON.stringify(state.allPosts))
   //console.log('mapStateToProps::fetched: ' + allPosts.fetched)
   return { 
            allPosts: state.allPosts.allPosts,
@@ -60,7 +61,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchData: () => dispatch(postsFetchData())
+    fetchData: () => dispatch(postsFetchData()),
+    deletePost: (postId) => dispatch(postDelete(postId))
   }
 }
 
