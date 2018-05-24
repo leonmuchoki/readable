@@ -5,7 +5,7 @@ import Loading from 'react-loading';
 
 import * as ReadableAPI from '../utils/ReadableAPI';
 import Comments from '../components/Comments';
-import { commentsFetchData, commentDelete } from '../actions/comments';
+import { commentsFetchData, commentDelete, commentVote } from '../actions/comments';
 
 class CommentsContainer extends Component {
 
@@ -46,10 +46,10 @@ class CommentsContainer extends Component {
     return post_comments//.filter((c)=>(c.parentId === parentId))
   }
 
-  voteOnComment = (commentId,option) => {
-    const post_body = {option: option}
-    ReadableAPI.voteOnComment(commentId,post_body)
-      .then((data)=>{})
+  voteOnComment = (commentId, option_selected) => {
+    const post_body = {}
+    post_body["option"] = option_selected
+    this.props.voteComment(commentId, post_body)
   }
 
   filterOutDeletedComments = (comments) => {
@@ -80,13 +80,15 @@ CommentsContainer.propTypes = {
   fetchData: PropTypes.func.isRequired,
   postCommentsFetched: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  deleteComment: PropTypes.func.isRequired
+  deleteComment: PropTypes.func.isRequired,
+  voteComment: PropTypes.func.isRequired
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     fetchData:  postId => dispatch(commentsFetchData(postId)),
-    deleteComment: commentId => dispatch(commentDelete(commentId))
+    deleteComment: commentId => dispatch(commentDelete(commentId)),
+    voteComment: (commentId, postBody) => dispatch(commentVote(commentId, postBody))
   }
 }
 

@@ -9,6 +9,7 @@ export const POST_COMMENTS_FETCHED = 'POST_COMMENTS_FETCHED'
 export const COMMENT_IS_POSTING = 'COMMENT_IS_POSTING'
 export const UPDATE_POST_COMMENT_COUNT = 'UPDATE_POST_COMMENT_COUNT'
 export const COMMENT_DELETE_SUCCESS = 'COMMENT_DELETE_SUCCESS'
+export const COMMENT_VOTE_SUCCESS = 'COMMENT_VOTE_SUCCESS'
 
 export function getComments({comments, postIdComment}) { //{id,timestamp,body,author,parentId,voteScore,deleted,parentDeleted}
  return {
@@ -135,6 +136,31 @@ export function commentDelete(commentId) {
                 .then((data)=> {
                   //console.log('commentDeleteSuccess ' + JSON.stringify(data))
                   dispatch(commentDeleteSuccess(data))
+                })
+                .catch(()=> dispatch(commentsHasErrored(true)))  
+  }
+}
+
+// vote on comment
+export function commentVoteSuccess(commentVoted) {
+  return {
+    type: COMMENT_VOTE_SUCCESS,
+    commentVoted
+  }
+}
+
+export function commentVote(commentId, postBody) {
+  return (dispatch) => {
+    dispatch(commentIsPosting(true));
+
+    ReadableAPI.voteOnComment(commentId, postBody)
+                .then((response)=> {
+                  dispatch(commentIsPosting(false));
+                  return response
+                })
+                .then((data)=> {
+                  //console.log('commentDeleteSuccess ' + JSON.stringify(data))
+                  dispatch(commentVoteSuccess(data))
                 })
                 .catch(()=> dispatch(commentsHasErrored(true)))  
   }

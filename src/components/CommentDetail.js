@@ -14,8 +14,10 @@ const CommentDetail = ({comments, voteOnComment, deleteComment}) => (
                   <p>{c["body"]}</p>
                 </div>
               </div>
-              <div className="comments-events" onClick={voteOnComment(c["id"],"upVote")}>
-                <span className="comments-events-vote">Vote</span>
+              <div className="comments-events">
+                <span className="comments-events-vote" onClick={() => voteOnComment(c["id"],"upVote")}>Vote</span>
+                <span aria-hidden="true" className="bullet"> · </span>
+                <span className="comments-events-vote" onClick={() => voteOnComment(c["id"],"downVote")}>DownVote</span>
                 <span aria-hidden="true" className="bullet"> · </span>
                 <span>{c["voteScore"]}</span>
                 <span aria-hidden="true" className="bullet"> · </span>
