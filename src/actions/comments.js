@@ -87,10 +87,10 @@ export function commentIsPosting(bool) {
   };
 }
 
-export function updatePostCommentCount(postId) {
+export function updatePostCommentCount(comment) {
   return {
     type: UPDATE_POST_COMMENT_COUNT,
-    postId
+    comment
   }
 }
 
@@ -105,9 +105,11 @@ export function postNewCommentData(values_to_post,postIdComment) {
                 })
                 .then((comments)=> {
                   dispatch(addComment(comments, postIdComment))
+                  return comments
                 })
-                .then(()=>{
-                  dispatch(updatePostCommentCount(postIdComment))
+                .then((comment)=>{
+                  //console.log('updatePostCommentCount ' + JSON.stringify(comment))
+                  dispatch(updatePostCommentCount(comment))
                 })
                 .catch(()=> dispatch(commentsHasErrored(true)))  
   }

@@ -133,21 +133,12 @@ function allPosts(state=postsInitialState, action) {
                                 ...allPosts]})//Object.assign({},state,{ allPosts: action.allPosts, fetched: true })
 
     case POSTS_FETCH_DATA_SUCCESS:
-      console.log('reducer POSTS_FETCH_DATA_SUCCESS::' + JSON.stringify(allPosts))
+      //console.log('reducer POSTS_FETCH_DATA_SUCCESS::' + JSON.stringify(allPosts))
       return Object.assign({},state,
                               {allPosts: [
                                 ...state.allPosts, 
                                 ...allPosts]})//Object.assign({},state,{ allPosts: action.allPosts, fetched: true })
                               
-  /*   case UPDATE_POST_COMMENT_COUNT:
-      let post_updated = state.allPosts.filter((p)=> {
-        return p.id === postId
-      }).map((m) => {
-        m.commentCount = m.commentCount + 1
-      })
-      console.log('UPDATE_POST_COMMENT_COUNT' + JSON.stringify(allPosts))
-      console.log('UPDATE_POST_COMMENT_COUNT-::-::' + JSON.stringify(postId))
-      return state */
 
     case POSTS_DELETE_SUCCESS:  
       let newState = state.allPosts.map((m,index)=>{
@@ -172,7 +163,7 @@ function allPosts(state=postsInitialState, action) {
 }
 
 export function postDataFetched(state = {}, action) {
-  const { postData, voteData } = action
+  const { postData, voteData, comment } = action
   switch (action.type) {
     case POST_GET_DATA_SUCCESS:
       //console.log('POST_GET_DATA_SUCCESS:D:' + JSON.stringify(action.postData))
@@ -180,6 +171,17 @@ export function postDataFetched(state = {}, action) {
 
     case POST_VOTE_SUCCESS:
       return Object.assign({}, state, voteData)
+
+    case UPDATE_POST_COMMENT_COUNT:
+      //console.log('UPDATE_POST_COMMENT_COUNT:U:' + JSON.stringify(state))
+      let parentId = comment.parentId
+      let postId = state.id
+      let updatedComment = state
+      if (postId === parentId) {
+        updatedComment.commentCount = updatedComment.commentCount + 1
+      }
+      //console.log('UPDATE_POST_COMMENT_COUNT:U:U:' + JSON.stringify(updatedComment))
+      return Object.assign({}, state, updatedComment)
     
     default:
       return state;
