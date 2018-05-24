@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import * as ReadableAPI from '../utils/ReadableAPI';
 //import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import Loading from 'react-loading';
+
 import PostComment from './PostComment';
 import PostVote from './PostVote';
-//import UpVoteIcon from 'react-icons/lib/fa/hand-o-up';
+import { getPostData } from '../actions/posts';
 import CommentsContainer from '../containers/CommentsContainer';
 import * as Helpers from '../utils/helpers';
 
@@ -19,17 +23,12 @@ class PostDetail extends Component {
   }
 
   getPostDetails = (id) => {
-    ReadableAPI.getPost(id)
-                .then(data => {
-                  this.setState({
-                    post_details: data
-                  })
-                })
+    this.props.fetchData(id)
   }
 
   render () {
     //const categories = this.props.categories
-    const post_details = this.state.post_details
+    const post_details = this.props.postDetails
     const comment_count = post_details["commentCount"]
     const vote_count = post_details["voteScore"]
     const post_id = this.props.match.params.id
@@ -57,4 +56,25 @@ class PostDetail extends Component {
   }
 }
 
-export default PostDetail
+PostDetail.propTypes = {
+  fetchData: PropTypes.func.isRequired,
+  postDetails: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => {
+  console.log('mapStateToProps::allPosts:postDetail-- ' + JSON.stringify(state.postDataFetched))
+   //console.log('mapStateToProps::fetched: ' + allPosts.fetched)
+   return { 
+            postDetails: state.postDataFetched,
+            isLoading: state.postsIsLoading,
+            hasErrored: state.postsHasErrored
+          }
+ }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchData: (postId) => dispatch(getPostData(postId))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostDetail)

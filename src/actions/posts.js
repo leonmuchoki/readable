@@ -8,6 +8,8 @@ export const POSTS_FETCH_DATA_SUCCESS = 'POSTS_FETCH_DATA_SUCCESS'
 export const UPDATE_POST_COMMENT_COUNT = 'UPDATE_POST_COMMENT_COUNT'
 export const DELETE_POST = 'DELETE_POST'
 export const POSTS_DELETE_SUCCESS = 'POSTS_DELETE_SUCCESS'
+export const POST_VOTE_SUCCESS = 'POST_VOTE_SUCCESS'
+export const POST_GET_DATA_SUCCESS = 'POST_GET_DATA_SUCCESS'
 
 export function updatePostCommentCount(postId,commentCount) {
   return {
@@ -84,6 +86,31 @@ export function postsFetchData() {
   }
 }
 
+// get post detail
+export function postGetDataSuccess(postData) {
+  return {
+    type: POST_GET_DATA_SUCCESS,
+    postData
+  }
+}
+
+export function getPostData(id) {
+  return (dispatch) => {
+    dispatch(postsIsLoading(true));
+
+    ReadableAPI.getPost(id)
+                .then((response)=> {
+                  dispatch(postsIsLoading(false));
+                  return response
+                })
+                .then((data)=> {
+                  console.log('postGetDataSuccess ' + JSON.stringify(data))
+                  dispatch(postGetDataSuccess(data))
+                })
+                .catch(()=> dispatch(postsHasErrored(true)))  
+  }
+}
+
 // delete posts:
 export function postDelete(postId) {
   return (dispatch) => {
@@ -95,8 +122,33 @@ export function postDelete(postId) {
                   return response
                 })
                 .then((data)=> {
-                  console.log('postDeleteSuccess ' + JSON.stringify(data))
+                  //console.log('postDeleteSuccess ' + JSON.stringify(data))
                   dispatch(postDeleteSuccess(data))
+                })
+                .catch(()=> dispatch(postsHasErrored(true)))  
+  }
+}
+
+// vote on post:
+export function postVoteSuccess(voteData) {
+  return {
+    type: POST_VOTE_SUCCESS,
+    voteData
+  }
+}
+
+export function postVote(postId,post_body) {
+  return (dispatch) => {
+    dispatch(postsIsLoading(true));
+
+    ReadableAPI.voteOnPost(postId,post_body)
+                .then((response)=> {
+                  dispatch(postsIsLoading(false));
+                  return response
+                })
+                .then((data)=> {
+                  console.log('postVoteSuccess ' + JSON.stringify(data))
+                  dispatch(postVoteSuccess(data))
                 })
                 .catch(()=> dispatch(postsHasErrored(true)))  
   }

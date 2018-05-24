@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux'
 
 import { GET_POSTS, ADD_NEW_POST, POSTS_FETCH_DATA_SUCCESS,
-         POSTS_IS_LOADING, POSTS_HAS_ERRORED, POSTS_DELETE_SUCCESS } from '../actions/posts';
+         POSTS_IS_LOADING, POSTS_HAS_ERRORED, POSTS_DELETE_SUCCESS, POST_VOTE_SUCCESS,
+         POST_GET_DATA_SUCCESS } from '../actions/posts';
 import { COMMENTS_IS_LOADING, COMMENTS_HAS_ERRORED, COMMENTS_FETCH_DATA_SUCCESS,
          POST_COMMENTS_FETCHED, COMMENT_IS_POSTING, ADD_COMMENT, UPDATE_POST_COMMENT_COUNT,
          GET_COMMENTS, COMMENT_DELETE_SUCCESS } from '../actions/comments';
@@ -160,9 +161,38 @@ function allPosts(state=postsInitialState, action) {
       })
       //console.log('POSTS_DELETE_SUCCESS:X:' + JSON.stringify(newState))
       return Object.assign({},state,{allPosts: newState})
+
+    case POST_VOTE_SUCCESS:
+      //console.log('POST_VOTE_SUCCESS:V:' + JSON.stringify(action.voteData))
+      let newStateAfterVote = state.allPosts.map((m,index)=>{
+        if(m.id === action.voteData.id) {
+          let n = Object.assign({},m,action.voteData)
+          return n
+        } else {
+          return m
+        }
+        
+      })
+      //console.log('POSTS_vote_SUCCESS:ss:' + JSON.stringify(newStateAfterVote))
+      return Object.assign({},state,{allPosts: newStateAfterVote})
+
+    /* case POST_GET_DATA_SUCCESS:
+      console.log('POST_GET_DATA_SUCCESS:ss:' + JSON.stringify(action.postData))
+      return state */
     
     default:
       return state
+  }
+}
+
+export function postDataFetched(state = {}, action) {
+  switch (action.type) {
+    case POST_GET_DATA_SUCCESS:
+      console.log('POST_GET_DATA_SUCCESS:D:' + JSON.stringify(action.postData))
+      return Object.assign({},state,action.postData) 
+    
+    default:
+      return state;
   }
 }
 
@@ -191,6 +221,7 @@ export default combineReducers({
   commentsIsLoading,
   commentsHasErrored,
   postCommentsFetched,
+  postDataFetched,
   commentIsPosting,
   allPosts,
   postsHasErrored,
