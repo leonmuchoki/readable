@@ -104,7 +104,7 @@ export function getPostData(id) {
                   return response
                 })
                 .then((data)=> {
-                  console.log('postGetDataSuccess ' + JSON.stringify(data))
+                  //console.log('postGetDataSuccess ' + JSON.stringify(data))
                   dispatch(postGetDataSuccess(data))
                 })
                 .catch(()=> dispatch(postsHasErrored(true)))  
@@ -147,7 +147,7 @@ export function postVote(postId,post_body) {
                   return response
                 })
                 .then((data)=> {
-                  console.log('postVoteSuccess ' + JSON.stringify(data))
+                  //console.log('postVoteSuccess ' + JSON.stringify(data))
                   dispatch(postVoteSuccess(data))
                 })
                 .catch(()=> dispatch(postsHasErrored(true)))  

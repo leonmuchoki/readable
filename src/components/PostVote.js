@@ -51,7 +51,7 @@ PostVote.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  console.log('mapStateToProps::allPosts:postVote-- ' + JSON.stringify(state.allPosts))
+  //console.log('mapStateToProps::allPosts:postVote-- ' + JSON.stringify(state.allPosts))
    //console.log('mapStateToProps::fetched: ' + allPosts.fetched)
    return { 
             allPosts: state.allPosts.allPosts

@@ -62,7 +62,7 @@ PostDetail.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  console.log('mapStateToProps::allPosts:postDetail-- ' + JSON.stringify(state.postDataFetched))
+  //console.log('mapStateToProps::allPosts:postDetail-- ' + JSON.stringify(state.postDataFetched))
    //console.log('mapStateToProps::fetched: ' + allPosts.fetched)
    return { 
             postDetails: state.postDataFetched,

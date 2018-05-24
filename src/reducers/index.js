@@ -162,20 +162,6 @@ function allPosts(state=postsInitialState, action) {
       //console.log('POSTS_DELETE_SUCCESS:X:' + JSON.stringify(newState))
       return Object.assign({},state,{allPosts: newState})
 
-    case POST_VOTE_SUCCESS:
-      //console.log('POST_VOTE_SUCCESS:V:' + JSON.stringify(action.voteData))
-      let newStateAfterVote = state.allPosts.map((m,index)=>{
-        if(m.id === action.voteData.id) {
-          let n = Object.assign({},m,action.voteData)
-          return n
-        } else {
-          return m
-        }
-        
-      })
-      //console.log('POSTS_vote_SUCCESS:ss:' + JSON.stringify(newStateAfterVote))
-      return Object.assign({},state,{allPosts: newStateAfterVote})
-
     /* case POST_GET_DATA_SUCCESS:
       console.log('POST_GET_DATA_SUCCESS:ss:' + JSON.stringify(action.postData))
       return state */
@@ -186,10 +172,14 @@ function allPosts(state=postsInitialState, action) {
 }
 
 export function postDataFetched(state = {}, action) {
+  const { postData, voteData } = action
   switch (action.type) {
     case POST_GET_DATA_SUCCESS:
-      console.log('POST_GET_DATA_SUCCESS:D:' + JSON.stringify(action.postData))
-      return Object.assign({},state,action.postData) 
+      //console.log('POST_GET_DATA_SUCCESS:D:' + JSON.stringify(action.postData))
+      return Object.assign({}, state, postData) 
+
+    case POST_VOTE_SUCCESS:
+      return Object.assign({}, state, voteData)
     
     default:
       return state;
