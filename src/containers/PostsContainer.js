@@ -30,7 +30,7 @@ class PostsContainer extends Component {
   render() {
     const { allPosts, isLoading, deletePost } = this.props
     let unDeletedPosts = this.filterOutDeletedPosts(allPosts)
-    
+
     return (
       <div>
         {isLoading === true 
@@ -50,7 +50,7 @@ PostsContainer.propTypes = {
 }
 
 const mapStateToProps = (state) => {
- console.log('mapStateToProps::allPosts:state-- ' + JSON.stringify(state.allPosts))
+ //console.log('mapStateToProps::allPosts:state-- ' + JSON.stringify(state.allPosts))
   //console.log('mapStateToProps::fetched: ' + allPosts.fetched)
   return { 
            allPosts: state.allPosts.allPosts,

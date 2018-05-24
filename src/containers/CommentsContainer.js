@@ -5,7 +5,7 @@ import Loading from 'react-loading';
 
 import * as ReadableAPI from '../utils/ReadableAPI';
 import Comments from '../components/Comments';
-import { commentsFetchData } from '../actions/comments';
+import { commentsFetchData, commentDelete } from '../actions/comments';
 
 class CommentsContainer extends Component {
 
@@ -52,16 +52,23 @@ class CommentsContainer extends Component {
       .then((data)=>{})
   }
 
+  filterOutDeletedComments = (comments) => {
+    return comments.filter((c)=>(c.deleted === false))
+  }
+
   render() {
+    const {postId, isLoading, addComment, deleteComment} = this.props;
+
     let post_comments = []
     post_comments = this.getParentComments()//this.props.comments;//this.state.post_comments
-    const {postId, isLoading, addComment} = this.props;
+    let unDeletedComments = this.filterOutDeletedComments(post_comments)
+    
     
     return (
       <div>
         {isLoading === true
          ? <Loading delay={200} type='spin' color='#222' className="loading-spinner" />
-         : <Comments comments={post_comments} postId={postId} voteOnComment={this.voteOnComment} addComment={addComment} />
+         : <Comments comments={unDeletedComments} postId={postId} voteOnComment={this.voteOnComment} deleteComment={deleteComment} />
         } 
       </div>
     )
@@ -72,22 +79,22 @@ CommentsContainer.propTypes = {
   postId: PropTypes.string.isRequired,
   fetchData: PropTypes.func.isRequired,
   postCommentsFetched: PropTypes.object.isRequired,
-  isLoading: PropTypes.bool.isRequired
+  isLoading: PropTypes.bool.isRequired,
+  deleteComment: PropTypes.func.isRequired
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    //getComments: comments => dispatch(getComments(comments)), 
-    //addComment: comments => dispatch(addComment(comments)),
-    fetchData:  postId => dispatch(commentsFetchData(postId))
+    fetchData:  postId => dispatch(commentsFetchData(postId)),
+    deleteComment: commentId => dispatch(commentDelete(commentId))
   }
 }
 
 const mapStateToProps = (state) => {
-  //console.log('mapStateToProps::comments' + JSON.stringify(state) + '----postidComment::' + state.commentsIsLoading)
+  //console.log('mapStateToProps::comments' + JSON.stringify(state.comments) + '----postidComment::' + state.commentsIsLoading)
   return { 
-           comments: state.comments,//comments,
-           postIdComment: '',//postIdComment
+           comments: state.comments,
+           postIdComment: '',
            postCommentsFetched: state.postCommentsFetched,
            isLoading: state.commentsIsLoading
          }

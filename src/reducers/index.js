@@ -4,7 +4,7 @@ import { GET_POSTS, ADD_NEW_POST, POSTS_FETCH_DATA_SUCCESS,
          POSTS_IS_LOADING, POSTS_HAS_ERRORED, POSTS_DELETE_SUCCESS } from '../actions/posts';
 import { COMMENTS_IS_LOADING, COMMENTS_HAS_ERRORED, COMMENTS_FETCH_DATA_SUCCESS,
          POST_COMMENTS_FETCHED, COMMENT_IS_POSTING, ADD_COMMENT, UPDATE_POST_COMMENT_COUNT,
-         GET_COMMENTS } from '../actions/comments';
+         GET_COMMENTS, COMMENT_DELETE_SUCCESS } from '../actions/comments';
 
 
 //----COMMENTS
@@ -73,7 +73,7 @@ function comments(state=initialStateComments, action) {
           {postIdComment: postIdComment})
     
     case ADD_COMMENT:
-      console.log('reducer ADD_COMMENT::' + JSON.stringify(comments) + '===postIdComment::' + postIdComment)
+      //console.log('reducer ADD_COMMENT::' + JSON.stringify(comments) + '===postIdComment::' + postIdComment)
       return  Object.assign({},state,
         {comments: [
           ...state.comments, comments
@@ -82,12 +82,27 @@ function comments(state=initialStateComments, action) {
       //Object.assign({},state,{ comments: comments, postIdComment: postIdComment })
 
     case COMMENTS_FETCH_DATA_SUCCESS:
-      console.log('reducer COMMENTS_FETCH_DATA_SUCCESS:: ' + JSON.stringify(comments))
+      //console.log('reducer COMMENTS_FETCH_DATA_SUCCESS:: ' + JSON.stringify(comments))
       return Object.assign({},state,
         {comments: [
           ...state.comments, 
           ...comments]},
           {postIdComment: postIdComment})
+
+    case COMMENT_DELETE_SUCCESS:
+      //console.log('reducer COMMENT_DELETE_SUCCESS:X: ' + JSON.stringify(action.comment))
+      //return state
+      let newStateComments = state.comments.map((c,index)=>{
+        if(c.id === action.comment.id) {
+          let n = Object.assign({},c,action.comment)
+          return n
+        } else {
+          return c
+        }
+        
+      })
+      //console.log('COMMENTS_DELETE_SUCCESS:X:' + JSON.stringify(newStateComments))
+      return Object.assign({},state,{comments: newStateComments})
 
     default:
       return state

@@ -2,8 +2,9 @@ import React from 'react';
 import Moment from 'react-moment';
 import * as Helpers from '../utils/helpers';
 import PropTypes from 'prop-types';
+import DeleteIcon from 'react-icons/lib/fa/trash';
 
-const CommentDetail = ({comments,voteOnComment}) => (
+const CommentDetail = ({comments, voteOnComment, deleteComment}) => (
   <div>
     {comments.map((c, index)=> (
             <div key={index}>
@@ -19,6 +20,8 @@ const CommentDetail = ({comments,voteOnComment}) => (
                 <span>{c["voteScore"]}</span>
                 <span aria-hidden="true" className="bullet"> · </span>
                 <span className="comments-events-time"><Moment fromNow>{Helpers.getDateFromTimeStamp(c["timestamp"])}</Moment></span>
+                <span aria-hidden="true" className="bullet"> · </span>
+                <span className="posts-delete-icon" onClick={()=>deleteComment(c["id"])}><DeleteIcon /></span>
               </div>
             </div>
           ))}
