@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 
 import { GET_POSTS, ADD_NEW_POST, POSTS_FETCH_DATA_SUCCESS,
          POSTS_IS_LOADING, POSTS_HAS_ERRORED, POSTS_DELETE_SUCCESS, POST_VOTE_SUCCESS,
-         POST_GET_DATA_SUCCESS } from '../actions/posts';
+         POST_GET_DATA_SUCCESS, POST_IS_CREATED } from '../actions/posts';
 import { COMMENTS_IS_LOADING, COMMENTS_HAS_ERRORED, COMMENTS_FETCH_DATA_SUCCESS,
          POST_COMMENTS_FETCHED, COMMENT_IS_POSTING, ADD_COMMENT, UPDATE_POST_COMMENT_COUNT,
          GET_COMMENTS, COMMENT_DELETE_SUCCESS, COMMENT_VOTE_SUCCESS } from '../actions/comments';
@@ -105,7 +105,7 @@ function comments(state=initialStateComments, action) {
       return Object.assign({},state,{comments: newStateComments})
 
     case COMMENT_VOTE_SUCCESS:
-      console.log('COMMENT_VOTE_SUCCESS:V:' + JSON.stringify(action.commentVoted))
+      //console.log('COMMENT_VOTE_SUCCESS:V:' + JSON.stringify(action.commentVoted))
       let newStateCommentsAfterVote = state.comments.map((c,index)=>{
         if(c.id === action.commentVoted.id) {
           let updatedComment = action.commentVoted
@@ -116,7 +116,7 @@ function comments(state=initialStateComments, action) {
           return c
         }
       })
-      console.log('COMMENTS_DELETE_SUCCESS:X:' + JSON.stringify(newStateCommentsAfterVote))
+      //console.log('COMMENTS_DELETE_SUCCESS:X:' + JSON.stringify(newStateCommentsAfterVote))
       return Object.assign({},state,{comments: newStateCommentsAfterVote})
 
     default:
@@ -131,12 +131,13 @@ const postsInitialState = {
 }
 
 function allPosts(state=postsInitialState, action) {
-  const { allPosts, post, postId } = action
+  const { allPosts, post, postId, postedData } = action
   switch(action.type) {
     case ADD_NEW_POST:
+      //console.log('reducer ADD_NEW_POST::' + JSON.stringify(action.postedData))
       return Object.assign({},state,
                                   {allPosts: [
-                                    ...state.allPosts, post
+                                    ...state.allPosts, postedData
                                   ]})//Object.assign({},state,action.post )//Object.assign({},state,{ ...state.allPosts, ...action.post })
 
     case GET_POSTS:
@@ -212,6 +213,17 @@ export function postsHasErrored(state = false, action) {
   }
 }
 
+export function postIsCreated(state = false, action) {
+  switch(action.type) {
+    case POST_IS_CREATED:
+      //console.log('reducer POST_IS_CREATED::' + JSON.stringify(action.hasCreated))
+      return action.hasCreated;
+    
+    default:
+      return state;
+  }
+}
+
 export function postsIsLoading(state = false, action) {
   switch (action.type) {
     case POSTS_IS_LOADING:
@@ -231,5 +243,6 @@ export default combineReducers({
   commentIsPosting,
   allPosts,
   postsHasErrored,
-  postsIsLoading
+  postsIsLoading,
+  postIsCreated
 })

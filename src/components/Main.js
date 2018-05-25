@@ -19,7 +19,7 @@ class Main extends Component {
                  render={() => ( 
                                   <PostsContainer /> 
                                 )} />
-        <Route exact path="/:category/posts" component={CategoryPosts} /> 
+        <Route exact path="/category/posts" component={CategoryPosts} /> 
                               
         <Route path="/post/:id" component={PostDetail} />
         <Route path="/create/post" 

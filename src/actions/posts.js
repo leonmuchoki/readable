@@ -10,6 +10,7 @@ export const DELETE_POST = 'DELETE_POST'
 export const POSTS_DELETE_SUCCESS = 'POSTS_DELETE_SUCCESS'
 export const POST_VOTE_SUCCESS = 'POST_VOTE_SUCCESS'
 export const POST_GET_DATA_SUCCESS = 'POST_GET_DATA_SUCCESS'
+export const POST_IS_CREATED = 'POST_IS_CREATED'
 
 export function updatePostCommentCount(postId,commentCount) {
   return {
@@ -26,26 +27,37 @@ export function getPosts({allPosts}) {
   }
 }
 
-export function addNewPost({post}) {
+// add new post
+export function addNewPostSuccess(postedData) {
   return {
     type: ADD_NEW_POST,
-    post
+    postedData
   };
 }
 
-/* export function deletePost(postId) {
+export function postIsCreated(bool) {
   return {
-    type: DELETE_POST,
-    postId
+    type: POST_IS_CREATED,
+    hasCreated: bool
+  };
+}
+
+export function addPostData(postData) {
+  return (dispatch) => {
+    dispatch(postIsCreated(false));
+
+    ReadableAPI.createNewPost(postData)
+                .then((data)=> {
+                  //console.log('addNewPostSuccess ' + JSON.stringify(data))
+                  dispatch(addNewPostSuccess(data))
+                })
+                .then((response)=> {
+                  dispatch(postIsCreated(true));
+                })
+                .catch(()=> dispatch(postsHasErrored(true)))  
   }
-} */
-
-export function postDeleteSuccess(allPosts) {
-  return {
-    type: POSTS_DELETE_SUCCESS,
-    allPosts
-  };
 }
+
 
 export function postsHasErrored(bool) {
   return {
@@ -112,6 +124,13 @@ export function getPostData(id) {
 }
 
 // delete posts:
+export function postDeleteSuccess(allPosts) {
+  return {
+    type: POSTS_DELETE_SUCCESS,
+    allPosts
+  };
+}
+
 export function postDelete(postId) {
   return (dispatch) => {
     dispatch(postsIsLoading(true));
