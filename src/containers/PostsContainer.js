@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Loading from 'react-loading';
+import { withRouter } from 'react-router-dom'
 
 import * as ReadableAPI from '../utils/ReadableAPI';
 import Posts from '../components/Posts';
@@ -32,7 +33,7 @@ class PostsContainer extends Component {
   render() {
     const { allPosts, isLoading, deletePost } = this.props
     let unDeletedPosts = this.filterOutDeletedPosts(allPosts)
-    console.log('unDeletedPosts::allPosts:state-- ' + JSON.stringify(unDeletedPosts))
+    //console.log('unDeletedPosts::allPosts:state-- ' + JSON.stringify(unDeletedPosts))
     return (
       <div>
         {isLoading === true 
@@ -68,4 +69,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostsContainer)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostsContainer))

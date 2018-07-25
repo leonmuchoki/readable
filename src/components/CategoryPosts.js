@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import * as ReadableAPI from '../utils/ReadableAPI';
+import Posts from '../components/Posts';
+import { postsFetchData, postDelete } from '../actions/posts';
 
 class CategoryPosts extends Component {
   
@@ -14,7 +18,7 @@ class CategoryPosts extends Component {
 
   getCategoryPosts = () => {
     const category = this.props.match.params.category
-    
+    console.log('getCategoryPosts...' + category)
     ReadableAPI.getCategoryPosts(category)
                 .then((data)=>{
                   this.setState({category_posts: data})
@@ -22,26 +26,21 @@ class CategoryPosts extends Component {
   }
 
   render () {
+    const { deletePost } = this.props
     const dP = this.state.category_posts;
-
+    //console.log('getCategoryPosts::dP:-- ' + JSON.stringify(dP))
     return (
       <div className='Posts'>
-        <ul>
-          {dP.length > 0 
-            ? (dP.map((p, index)=>(
-            <div className="post-item"  key={index}>
-              <li key={index} className="header-post-item">
-                <Link to={`/post/${ p["id"] }`} key={index}>{p["title"]}</Link>
-              </li>
-            </div>
-          ))
-          )
-          : <div className="no-category-post"><span>This category has no post yet...</span></div>
-        }
-        </ul>
+        <Posts allPosts={dP} deletePost={deletePost} />
       </div>
     )
   }
 }
 
-export default CategoryPosts;
+const mapDispatchToProps = dispatch => {
+  return {
+    deletePost: (postId) => dispatch(postDelete(postId))
+  }
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(CategoryPosts))

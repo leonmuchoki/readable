@@ -4,3 +4,7 @@ A content and comment web app. Users will be able to post content to predefined 
 ## installation
 - npm install
 - npm start or yarn start
+
+
+## references
+https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/guides/blocked-updates.md
