@@ -11,6 +11,7 @@ export const POSTS_DELETE_SUCCESS = 'POSTS_DELETE_SUCCESS'
 export const POST_VOTE_SUCCESS = 'POST_VOTE_SUCCESS'
 export const POST_GET_DATA_SUCCESS = 'POST_GET_DATA_SUCCESS'
 export const POST_IS_CREATED = 'POST_IS_CREATED'
+export const CATEGORY_POSTS_FETCH_DATA_SUCCESS = 'CATEGORY_POSTS_FETCH_DATA_SUCCESS'
 
 export function updatePostCommentCount(postId,commentCount) {
   return {
@@ -122,6 +123,33 @@ export function getPostData(id) {
                 .catch(()=> dispatch(postsHasErrored(true)))  
   }
 }
+
+
+// get category posts
+export function categoryPostsFetchSuccess(categoryPosts) {
+  return {
+    type: CATEGORY_POSTS_FETCH_DATA_SUCCESS,
+    categoryPosts
+  }
+}
+
+export function getCategoryPosts(category) {
+  return (dispatch) => {
+    dispatch(postsIsLoading(true));
+
+    ReadableAPI.getCategoryPosts(category)
+                .then((response)=> {
+                  dispatch(postsIsLoading(false));
+                  return response
+                })
+                .then((data)=> {
+                  //console.log('postGetDataSuccess ' + JSON.stringify(data))
+                  dispatch(categoryPostsFetchSuccess(data))
+                })
+                .catch(()=> dispatch(postsHasErrored(true)))  
+  }
+}
+
 
 // delete posts:
 export function postDeleteSuccess(allPosts) {

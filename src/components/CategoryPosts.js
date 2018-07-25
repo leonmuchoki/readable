@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Loading from 'react-loading';
 
 import * as ReadableAPI from '../utils/ReadableAPI';
 import Posts from '../components/Posts';
-import { postsFetchData, postDelete } from '../actions/posts';
+import { getCategoryPosts, postDelete } from '../actions/posts';
 
 class CategoryPosts extends Component {
   
@@ -17,30 +18,41 @@ class CategoryPosts extends Component {
   }
 
   getCategoryPosts = () => {
-    const category = this.props.match.params.category
+    let category = this.props.match.params.category
     console.log('getCategoryPosts...' + category)
-    ReadableAPI.getCategoryPosts(category)
-                .then((data)=>{
-                  this.setState({category_posts: data})
-                })
+    this.props.fetchCategoryPosts(category)
   }
 
   render () {
-    const { deletePost } = this.props
-    const dP = this.state.category_posts;
-    //console.log('getCategoryPosts::dP:-- ' + JSON.stringify(dP))
+    const { deletePost, categoryPosts, isLoading } = this.props
+    //console.log('getCategoryPosts::dP:-- ' + JSON.stringify(this.props.categoryPosts))
     return (
       <div className='Posts'>
-        <Posts allPosts={dP} deletePost={deletePost} />
+        {isLoading === true 
+          ? <Loading delay={200} type='spin' color='#222' className="loading-spinner" />
+          :
+            <Posts allPosts={categoryPosts} deletePost={deletePost} />
+        }
+        
       </div>
     )
   }
 }
 
+const mapStateToProps = (state) => {
+  //console.log('mapStateToProps::categoryPosts:state-- ' + JSON.stringify(state.categoryPosts.categoryPosts))
+   return { 
+            categoryPosts: state.categoryPosts.categoryPosts,
+            isLoading: state.postsIsLoading,
+            hasErrored: state.postsHasErrored
+          }
+ }
+
 const mapDispatchToProps = dispatch => {
   return {
-    deletePost: (postId) => dispatch(postDelete(postId))
+    deletePost: (postId) => dispatch(postDelete(postId)),
+    fetchCategoryPosts: (category) => dispatch(getCategoryPosts(category))
   }
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(CategoryPosts))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CategoryPosts))

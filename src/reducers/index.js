@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 
 import { GET_POSTS, ADD_NEW_POST, POSTS_FETCH_DATA_SUCCESS,
          POSTS_IS_LOADING, POSTS_HAS_ERRORED, POSTS_DELETE_SUCCESS, POST_VOTE_SUCCESS,
-         POST_GET_DATA_SUCCESS, POST_IS_CREATED } from '../actions/posts';
+         POST_GET_DATA_SUCCESS, POST_IS_CREATED, CATEGORY_POSTS_FETCH_DATA_SUCCESS } from '../actions/posts';
 import { COMMENTS_IS_LOADING, COMMENTS_HAS_ERRORED, COMMENTS_FETCH_DATA_SUCCESS,
          POST_COMMENTS_FETCHED, COMMENT_IS_POSTING, ADD_COMMENT, UPDATE_POST_COMMENT_COUNT,
          GET_COMMENTS, COMMENT_DELETE_SUCCESS, COMMENT_VOTE_SUCCESS } from '../actions/comments';
@@ -234,6 +234,22 @@ export function postsIsLoading(state = false, action) {
   }
 }
 
+const c_PostsInitialState = {
+  categoryPosts: []
+}
+export function categoryPosts(state=c_PostsInitialState, action) {
+  switch(action.type) {
+    case CATEGORY_POSTS_FETCH_DATA_SUCCESS:
+      //console.log('reducer...' + JSON.stringify(action.categoryPosts))
+      return {...state,
+              categoryPosts: [
+                ...action.categoryPosts
+              ]}//Object.assign({}, state, action.categoryPosts)
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   comments,
   commentsIsLoading,
@@ -244,5 +260,6 @@ export default combineReducers({
   allPosts,
   postsHasErrored,
   postsIsLoading,
-  postIsCreated
+  postIsCreated,
+  categoryPosts
 })
