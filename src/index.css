@@ -92,6 +92,12 @@ div {
   transition: border-color .5s ease;
 }
 
+.posts-footer {
+  display: flex;
+  justify-content:  space-between;
+  margin-top: 16px;
+}
+
 .header-post-item {
   font-family: 'q_serif',Georgia,Times,"Times New Roman","Hiragino Kaku Gothic Pro","Meiryo",serif;
   font-weight: bold;

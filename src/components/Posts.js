@@ -9,6 +9,7 @@ const Posts = ({allPosts,deletePost}) => (
     <ul>
       {allPosts !== undefined && allPosts.map((p, index)=>(
         <div className="post-item" key={index}>
+          <h4>{p["author"]}</h4>
           <li key={index} className="header-post-item">
             <Link to={`/post/${ p["id"] }`} key={index}>
               {p["title"]}
@@ -18,6 +19,10 @@ const Posts = ({allPosts,deletePost}) => (
             <span aria-hidden="true" className="bullet"> · </span>
             <span className="posts-delete-icon" onClick={()=>deletePost(p["id"])}><DeleteIcon /></span>
           </li>
+          <div className="posts-footer">
+            <span>Vote<span aria-hidden="true" className="bullet"> · </span>{p["voteScore"]}</span>
+            <span>Comment<span aria-hidden="true" className="bullet"> · </span>{p["commentCount"]}</span>
+          </div>
         </div>
       ))}
     </ul>
