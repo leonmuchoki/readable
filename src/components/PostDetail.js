@@ -46,7 +46,7 @@ class PostDetail extends Component {
 
     return (
       <div className="post-detail">
-        {Object.keys(post_details).length > 0 && check_if_err === false
+        {Object.keys(post_details).length > 0 && post_details["title"] !== undefined
           ?
             <div>
               <h3>{post_details["title"]}</h3>

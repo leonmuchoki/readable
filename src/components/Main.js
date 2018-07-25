@@ -24,8 +24,8 @@ class Main extends Component {
                     <CategoryPosts /> 
                   )} /> 
                                   
-            <Route path="/:category/:id" component={PostDetail} />
-            <Route exact path="/create/post" 
+            <Route exact path="/:category/:id" component={PostDetail} />
+            <Route exact path="/create/new/post" 
                   render={()=> (
                     <CreatePost categories={categories} />
                   )} />
