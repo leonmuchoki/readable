@@ -11,7 +11,7 @@ const Posts = ({allPosts,deletePost}) => (
         <div className="post-item" key={index}>
           <h4>{p["author"]}</h4>
           <li key={index} className="header-post-item">
-            <Link to={`/post/${ p["id"] }`} key={index}>
+            <Link to={`/${ p["category"] }/${ p["id"] }`} key={index}>
               {p["title"]}
             </Link>
             <span aria-hidden="true" className="bullet"> · </span>
