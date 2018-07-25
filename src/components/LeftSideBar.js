@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class LeftSideBar extends Component {
   
@@ -12,7 +13,7 @@ class LeftSideBar extends Component {
         <ul className='category-list'>
           {categories.map((c, index)=>(
             <li key={index} className="category-list-item">
-              <Link to={`/${c.name}/posts`} className="category-list-item-link">
+              <Link to={`/${c.name}`} className="category-list-item-link">
                 {c.name}
               </Link>
             </li>
@@ -23,4 +24,4 @@ class LeftSideBar extends Component {
   }
 }
 
-export default LeftSideBar;
+export default connect(null, null)(LeftSideBar)

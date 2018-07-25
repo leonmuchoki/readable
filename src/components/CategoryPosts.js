@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+
 import { connect } from 'react-redux';
 import Loading from 'react-loading';
 
@@ -15,6 +16,12 @@ class CategoryPosts extends Component {
 
   componentDidMount() {
     this.getCategoryPosts();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.match.params.category !== this.props.match.params.category) {
+      this.getCategoryPosts();
+    }
   }
 
   getCategoryPosts = () => {
