@@ -53,8 +53,9 @@ PostsContainer.propTypes = {
 }
 
 const mapStateToProps = (state) => {
- //console.log('mapStateToProps::allPosts:state-- ' + JSON.stringify(state.allPosts))
+ console.log('mapStateToProps::sortPosts:state-- ' + JSON.stringify(state.allPosts.allPosts))
   //console.log('mapStateToProps::fetched: ' + allPosts.fetched)
+  const sortBy = state.sortPosts.sortBy
   return { 
            allPosts: state.allPosts.allPosts,
            isLoading: state.postsIsLoading,

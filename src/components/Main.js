@@ -6,7 +6,7 @@ import PostsContainer from '../containers/PostsContainer';
 import PostDetail from './PostDetail';
 import CategoryPosts from './CategoryPosts';
 import CreatePost from './CreatePost';
-//import * as ReadableAPI from '../utils/ReadableAPI';
+import SortPosts from '../components/SortPosts'
 
 class Main extends Component {
 
@@ -15,21 +15,23 @@ class Main extends Component {
     return (
       <div className='main'>
         <LeftSideBar categories={categories} />
-        
-          <Route exact path="/"
+          <div className='main-content'>
+            <SortPosts />
+            <Route exact path="/"
+                    render={() => ( 
+                                      <PostsContainer /> 
+                                    )} />
+            <Route path="/:category" 
                   render={() => ( 
-                                    <PostsContainer /> 
-                                  )} />
-          <Route path="/:category" 
-                render={() => ( 
-                  <CategoryPosts /> 
-                )} /> 
-                                
-          <Route path="/post/:id" component={PostDetail} />
-          <Route path="/create/post" 
-                render={()=> (
-                  <CreatePost categories={categories} />
-                )} />
+                    <CategoryPosts /> 
+                  )} /> 
+                                  
+            <Route path="/post/:id" component={PostDetail} />
+            <Route path="/create/post" 
+                  render={()=> (
+                    <CreatePost categories={categories} />
+                  )} />
+          </div>
         
       </div>
     )

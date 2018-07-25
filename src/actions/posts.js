@@ -12,12 +12,20 @@ export const POST_VOTE_SUCCESS = 'POST_VOTE_SUCCESS'
 export const POST_GET_DATA_SUCCESS = 'POST_GET_DATA_SUCCESS'
 export const POST_IS_CREATED = 'POST_IS_CREATED'
 export const CATEGORY_POSTS_FETCH_DATA_SUCCESS = 'CATEGORY_POSTS_FETCH_DATA_SUCCESS'
+export const SORT_POSTS = 'SORT_POSTS'
 
 export function updatePostCommentCount(postId,commentCount) {
   return {
     type: UPDATE_POST_COMMENT_COUNT,
     postId,
     commentCount
+  }
+}
+
+export function sortingType(sortBy) {
+  return {
+    type: SORT_POSTS,
+    sortBy
   }
 }
 
