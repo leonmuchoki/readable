@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom'
 import * as ReadableAPI from '../utils/ReadableAPI';
 import * as Helpers from '../utils/helpers'
 import Posts from '../components/Posts';
-//import { getPosts } from '../actions/index';
+import SortPosts from '../components/SortPosts'
 import { postsFetchData, postDelete } from '../actions/posts';
 
 
@@ -53,6 +53,7 @@ class PostsContainer extends Component {
     //console.log('unDeletedPosts::allPosts:state-- ' + JSON.stringify(unDeletedPosts))
     return (
       <div>
+        <SortPosts />
         {isLoading === true 
            ? <Loading delay={200} type='spin' color='#222' className="loading-spinner" />
            : <Posts allPosts={unDeletedPosts} deletePost={deletePost} /> }

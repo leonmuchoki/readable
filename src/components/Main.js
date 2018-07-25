@@ -6,7 +6,6 @@ import PostsContainer from '../containers/PostsContainer';
 import PostDetail from './PostDetail';
 import CategoryPosts from './CategoryPosts';
 import CreatePost from './CreatePost';
-import SortPosts from '../components/SortPosts'
 
 class Main extends Component {
 
@@ -16,7 +15,6 @@ class Main extends Component {
       <div className='main'>
         <LeftSideBar categories={categories} />
           <div className='main-content'>
-            <SortPosts />
             <Route exact path="/"
                     render={() => ( 
                                       <PostsContainer /> 
