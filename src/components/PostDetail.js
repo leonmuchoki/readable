@@ -11,6 +11,7 @@ import PostVote from './PostVote';
 import { getPostData } from '../actions/posts';
 import CommentsContainer from '../containers/CommentsContainer';
 import * as Helpers from '../utils/helpers';
+import NotFound from './NotFound'
 
 class PostDetail extends Component {
   state = {
@@ -26,9 +27,18 @@ class PostDetail extends Component {
     this.props.fetchData(id)
   }
 
+  checkIfErr = (post_details) => {
+    if (post_details["error"] !== undefined) {
+      return true
+    }
+    return false
+  }
+
   render () {
     //const categories = this.props.categories
     const post_details = this.props.postDetails
+    let check_if_err = this.checkIfErr(post_details)
+    
     const comment_count = post_details["commentCount"]
     const vote_count = post_details["voteScore"]
     const post_id = this.props.match.params.id
@@ -36,21 +46,28 @@ class PostDetail extends Component {
 
     return (
       <div className="post-detail">
-        <h3>{post_details["title"]}</h3>
-        <div className="post-detail-top">
-          <span className="post-detail-author">{post_details["author"]}</span>
-          <span className="comments-events-time"><Moment fromNow>{Helpers.getDateFromTimeStamp(post_details["timestamp"])}</Moment></span>
-        </div>
-        <div className="post-detail-body">
-          <span className="post-detail-body-text">{post_details["body"]}</span>
-        </div>
-        <div className="post-detail-footer">
-          <PostComment countComments={comment_count} />
-          <PostVote countVotes={vote_count} postId={post_id} />
-        </div>
-        <div>
-            <CommentsContainer postId={post_id} />
-        </div>
+        {Object.keys(post_details).length > 0 && check_if_err === false
+          ?
+            <div>
+              <h3>{post_details["title"]}</h3>
+              <div className="post-detail-top">
+                <span className="post-detail-author">{post_details["author"]}</span>
+                <span className="comments-events-time"><Moment fromNow>{Helpers.getDateFromTimeStamp(post_details["timestamp"])}</Moment></span>
+              </div>
+              <div className="post-detail-body">
+                <span className="post-detail-body-text">{post_details["body"]}</span>
+              </div>
+              <div className="post-detail-footer">
+                <PostComment countComments={comment_count} />
+                <PostVote countVotes={vote_count} postId={post_id} />
+              </div>
+              <div>
+                  <CommentsContainer postId={post_id} />
+              </div>
+            </div>
+          : <NotFound />
+        }
+        
       </div>
     )
   }
