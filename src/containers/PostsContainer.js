@@ -19,7 +19,7 @@ class PostsContainer extends Component {
   getDefaultPosts = () => {
     //console.log('----getDefaultPosts()---')
     const { allPosts } = this.props
-    console.log('----getDefaultPosts()---' + JSON.stringify(allPosts))
+    //console.log('----getDefaultPosts()---' + JSON.stringify(allPosts))
     if (allPosts === undefined || allPosts.length <= 0) {
       this.props.fetchData()
     }  

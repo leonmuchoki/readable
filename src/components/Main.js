@@ -15,7 +15,7 @@ class Main extends Component {
     return (
       <div className='main'>
         <LeftSideBar categories={categories} />
-        <Switch>
+        
           <Route exact path="/"
                   render={() => ( 
                                     <PostsContainer /> 
@@ -30,7 +30,7 @@ class Main extends Component {
                 render={()=> (
                   <CreatePost categories={categories} />
                 )} />
-        </Switch>
+        
       </div>
     )
   }

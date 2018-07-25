@@ -32,7 +32,7 @@ class PostDetail extends Component {
     const comment_count = post_details["commentCount"]
     const vote_count = post_details["voteScore"]
     const post_id = this.props.match.params.id
-    //console.log('postdetails...' + JSON.stringify(post_details))
+    console.log('postdetails...' + JSON.stringify(post_id))
 
     return (
       <div className="post-detail">
@@ -62,7 +62,7 @@ PostDetail.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  //console.log('mapStateToProps::allPosts:postDetail-- ' + JSON.stringify(state.postDataFetched))
+  console.log('mapStateToProps::allPosts:postDetail-- ' + JSON.stringify(state.postDataFetched))
    //console.log('mapStateToProps::fetched: ' + allPosts.fetched)
    return { 
             postDetails: state.postDataFetched,
