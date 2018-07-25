@@ -5,6 +5,7 @@ import Loading from 'react-loading';
 import { withRouter } from 'react-router-dom'
 
 import * as ReadableAPI from '../utils/ReadableAPI';
+import * as Helpers from '../utils/helpers'
 import Posts from '../components/Posts';
 //import { getPosts } from '../actions/index';
 import { postsFetchData, postDelete } from '../actions/posts';
@@ -27,7 +28,23 @@ class PostsContainer extends Component {
   }
 
   filterOutDeletedPosts = (allPosts) => {
-    return allPosts.filter((p)=>(p.deleted === false))
+    // filter and sort
+    let sortBy = this.props.sortBy
+    let sortedPosts
+    let filteredPosts = allPosts.filter((p)=>(p.deleted === false))
+    if (sortBy !== undefined && sortBy.length > 0) {
+      if (sortBy === "score") {
+        sortedPosts = filteredPosts.sort(Helpers.compareByScore)
+      }
+      else if (sortBy === "date") {
+        sortedPosts = filteredPosts.sort(Helpers.compareByDate)
+      }
+    }
+
+    if (sortedPosts === undefined) {
+      sortedPosts = filteredPosts
+    }
+    return sortedPosts
   }
 
   render() {
@@ -55,11 +72,14 @@ PostsContainer.propTypes = {
 const mapStateToProps = (state) => {
  console.log('mapStateToProps::sortPosts:state-- ' + JSON.stringify(state.allPosts.allPosts))
   //console.log('mapStateToProps::fetched: ' + allPosts.fetched)
+  let all_posts = state.allPosts.allPosts
   const sortBy = state.sortPosts.sortBy
+
   return { 
-           allPosts: state.allPosts.allPosts,
+           allPosts: all_posts,
            isLoading: state.postsIsLoading,
-           hasErrored: state.postsHasErrored
+           hasErrored: state.postsHasErrored,
+           sortBy: sortBy
          }
 }
 

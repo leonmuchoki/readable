@@ -9,3 +9,21 @@ export const uuidv4 = () => {
     return v.toString(16);
   });
 }
+
+// function to sort posts by score
+export const compareByScore = (a, b) => {
+  if (a.voteScore < b.voteScore)
+    return -1;
+  if (a.voteScore > b.voteScore)
+    return 1;
+  return 0;
+}
+
+// function to sort posts by date
+export const compareByDate = (a, b) => {
+  if (a.timestamp < b.timestamp)
+    return -1;
+  if (a.timestamp > b.timestamp)
+    return 1;
+  return 0;
+}
