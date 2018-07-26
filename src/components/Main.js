@@ -6,6 +6,7 @@ import PostsContainer from '../containers/PostsContainer';
 import PostDetail from './PostDetail';
 import CategoryPosts from './CategoryPosts';
 import CreatePost from './CreatePost';
+import EditPost from './EditPost';
 
 class Main extends Component {
 
@@ -29,6 +30,7 @@ class Main extends Component {
                   render={()=> (
                     <CreatePost categories={categories} />
                   )} />
+            <Route exact path="/post/edit/:id" component={EditPost} />
           </div>
         
       </div>

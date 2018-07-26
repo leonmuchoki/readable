@@ -15,7 +15,9 @@ const Posts = ({allPosts,deletePost}) => (
               {p["title"]}
             </Link>
             <span aria-hidden="true" className="bullet"> · </span>
-            <span className="posts-delete-icon" ><EditIcon /></span>
+            <Link to={`/post/edit/${ p["id"] }`}>
+              <span className="posts-delete-icon" ><EditIcon /></span>
+            </Link>
             <span aria-hidden="true" className="bullet"> · </span>
             <span className="posts-delete-icon" onClick={()=>deletePost(p["id"])}><DeleteIcon /></span>
           </li>
