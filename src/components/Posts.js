@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import DeleteIcon from 'react-icons/lib/fa/trash';
 import EditIcon from 'react-icons/lib/fa/pencil';
+import PostVote from './PostVote';
 
 const Posts = ({allPosts,deletePost}) => (
   <div className='posts-wrap'>
@@ -22,8 +23,8 @@ const Posts = ({allPosts,deletePost}) => (
             <span className="posts-delete-icon" onClick={()=>deletePost(p["id"])}><DeleteIcon /></span>
           </li>
           <div className="posts-footer">
-            <span>Votes<span aria-hidden="true" className="bullet"> · </span>{p["voteScore"]}</span>
             <span>Comments<span aria-hidden="true" className="bullet"> · </span>{p["commentCount"]}</span>
+            <PostVote countVotes={p["voteScore"]} postId={p["id"]} />
           </div>
         </div>
       ))}

@@ -132,7 +132,7 @@ const postsInitialState = {
 }
 
 function allPosts(state=postsInitialState, action) {
-  const { allPosts, post, postId, postedData, updatedPostData } = action
+  const { allPosts, post, postId, postedData, updatedPostData, voteData } = action
   switch(action.type) {
     case ADD_NEW_POST:
       //console.log('reducer ADD_NEW_POST::' + JSON.stringify(action.postedData))
@@ -169,6 +169,19 @@ function allPosts(state=postsInitialState, action) {
                                 ...state.allPosts, 
                                 ...allPosts]})//Object.assign({},state,{ allPosts: action.allPosts, fetched: true })
                               
+    case POST_VOTE_SUCCESS:
+      const postsBeforeVote = state.allPosts
+      let postsAfterVote = postsBeforeVote.map((p)=>{
+        if (p.id === voteData.id) {
+          return Object.assign({}, p, voteData)
+        }
+        return p
+      })
+      //console.log('EDIT_POST>>>' + JSON.stringify(postsUpdated))
+      return Object.assign({},state,
+                              {allPosts: [
+                                state.allPosts, 
+                                ...postsAfterVote]})
 
     case POSTS_DELETE_SUCCESS:  
       let newState = state.allPosts.map((m,index)=>{
@@ -200,6 +213,7 @@ export function postDataFetched(state = {}, action) {
       return Object.assign({}, state, postData) 
 
     case POST_VOTE_SUCCESS:
+    console.log('POST_voteData_DATA_SUCCESS:D:' + JSON.stringify(voteData))
       return Object.assign({}, state, voteData)
 
     case UPDATE_POST_COMMENT_COUNT:

@@ -17,6 +17,13 @@ class PostsContainer extends Component {
       this.getDefaultPosts();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.allPosts !== this.props.allPosts) {
+      //pre-poluate fields
+      this.getDefaultPosts()
+    }
+  }
+
   getDefaultPosts = () => {
     //console.log('----getDefaultPosts()---')
     const { allPosts } = this.props
@@ -71,7 +78,7 @@ PostsContainer.propTypes = {
 }
 
 const mapStateToProps = (state) => {
- //console.log('mapStateToProps::sortPosts:state-- ' + JSON.stringify(state.allPosts.allPosts))
+ console.log('mapStateToProps::sortPosts:state-- ' + JSON.stringify(state.allPosts.allPosts))
   //console.log('mapStateToProps::fetched: ' + allPosts.fetched)
   let all_posts = state.allPosts.allPosts
   const sortBy = state.sortPosts.sortBy
