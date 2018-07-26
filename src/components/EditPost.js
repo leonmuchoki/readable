@@ -7,14 +7,15 @@ import PropTypes from 'prop-types';
 import * as Helpers from '../utils/helpers';
 import * as ReadableAPI from '../utils/ReadableAPI';
 //import { createNewPost } from '../utils/ReadableAPI';
-import { addPostData,getPostData } from '../actions/posts'
+import { getCategories,getPostData } from '../actions/posts'
 
 class EditPost extends Component {
 
   state = {
     title: '',
     author: '',
-    body: ''
+    body: '',
+    category: ''
   }
 
   componentDidMount() {
@@ -22,7 +23,7 @@ class EditPost extends Component {
     const id = this.props.match.params.id
     console.log('post id edit post::' + id)
     this.getPostData(id)
-    
+    this.props.fetchCategories()
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -44,7 +45,8 @@ class EditPost extends Component {
       this.setState({
         title: postToEdit["title"],
         author: postToEdit["author"],
-        body: postToEdit["body"]
+        body: postToEdit["body"],
+        category: postToEdit["category"]
       })
     }
   }
@@ -78,8 +80,7 @@ class EditPost extends Component {
     if (this.props.hasCreated === true) {
       return <Redirect to='/' />
     }
-    //let upd = this.updateFormFields()
-    const categories = []//this.props.categories;
+    const categories = this.props.categories;
 
     return (
       <div className="form-wrap">
@@ -89,11 +90,11 @@ class EditPost extends Component {
               <span>Edit Post</span>
             </div>
             <div className="form-inputs-wrap">
-              <select className="form-input-select" name="category">
+              <select value={this.state.category || ''} onChange={this.handleInputChange} name="category" className="form-input-select" >
                 <option value="">Select Category</option>
-                {/* categories.map((c, index)=> (
+                { categories !== undefined && categories.map((c, index)=> (
                   <option key={index} value={c.name}>{c.name}</option>
-                )) */}
+                )) }
               </select>
               <input type="text" name="author" value={this.state.author || ''} 
                      onChange={this.handleInputChange} placeholder="add author.." className="form-input" />            
@@ -117,14 +118,16 @@ EditPost.propTypes = {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchPostData: (postId) => dispatch(getPostData(postId))
+    fetchPostData: (postId) => dispatch(getPostData(postId)),
+    fetchCategories: () => dispatch(getCategories())
   }
 }
 
 const mapStateToProps = (state) => {
-  console.log('mapStateToProps::postDataFetched:editPotst-- ' + JSON.stringify(state.postDataFetched))
+  console.log('mapStateToProps::postDataFetched:editPotst-- ' + JSON.stringify(state.getCategories.categories))
    return { 
             postToEdit: state.postDataFetched,
+            categories: state.getCategories.categories,
             hasCreated: state.postIsCreated
           }
  }

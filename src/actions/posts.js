@@ -13,6 +13,7 @@ export const POST_GET_DATA_SUCCESS = 'POST_GET_DATA_SUCCESS'
 export const POST_IS_CREATED = 'POST_IS_CREATED'
 export const CATEGORY_POSTS_FETCH_DATA_SUCCESS = 'CATEGORY_POSTS_FETCH_DATA_SUCCESS'
 export const SORT_POSTS = 'SORT_POSTS'
+export const GET_CATEGORIES_SUCCESS = 'GET_CATEGORIES_SUCCESS'
 
 export function updatePostCommentCount(postId,commentCount) {
   return {
@@ -49,6 +50,31 @@ export function postIsCreated(bool) {
     type: POST_IS_CREATED,
     hasCreated: bool
   };
+}
+
+// get categories
+export function getCategoriesSuccess(categoryData) {
+  return {
+    type: GET_CATEGORIES_SUCCESS,
+    categoryData
+  }
+}
+
+export function getCategories() {
+  return (dispatch) => {
+    dispatch(postsIsLoading(true));
+
+    ReadableAPI.getAllCatgories()
+                .then((response)=> {
+                  dispatch(postsIsLoading(false));
+                  return response
+                })
+                .then((data)=> {
+                  //console.log('postGetDataSuccess ' + JSON.stringify(data))
+                  dispatch(getCategoriesSuccess(data))
+                })
+                .catch(()=> dispatch(postsHasErrored(true)))  
+  }
 }
 
 export function addPostData(postData) {

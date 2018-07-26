@@ -3,7 +3,7 @@ import { combineReducers } from 'redux'
 import { GET_POSTS, ADD_NEW_POST, POSTS_FETCH_DATA_SUCCESS,
          POSTS_IS_LOADING, POSTS_HAS_ERRORED, POSTS_DELETE_SUCCESS, POST_VOTE_SUCCESS,
          POST_GET_DATA_SUCCESS, POST_IS_CREATED, CATEGORY_POSTS_FETCH_DATA_SUCCESS,
-         SORT_POSTS } from '../actions/posts';
+         SORT_POSTS, GET_CATEGORIES_SUCCESS } from '../actions/posts';
 import { COMMENTS_IS_LOADING, COMMENTS_HAS_ERRORED, COMMENTS_FETCH_DATA_SUCCESS,
          POST_COMMENTS_FETCHED, COMMENT_IS_POSTING, ADD_COMMENT, UPDATE_POST_COMMENT_COUNT,
          GET_COMMENTS, COMMENT_DELETE_SUCCESS, COMMENT_VOTE_SUCCESS } from '../actions/comments';
@@ -267,6 +267,18 @@ export function sortPosts(state=sortInitialState, action) {
   }
 }
 
+export function getCategories(state={}, action) {
+  switch(action.type) {
+    case GET_CATEGORIES_SUCCESS:
+      return {
+        ...state,
+        categories: action.categoryData
+      }
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   comments,
   commentsIsLoading,
@@ -279,5 +291,6 @@ export default combineReducers({
   postsIsLoading,
   postIsCreated,
   categoryPosts,
-  sortPosts
+  sortPosts,
+  getCategories
 })
