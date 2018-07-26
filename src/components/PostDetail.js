@@ -25,7 +25,6 @@ class PostDetail extends Component {
     const id = this.props.match.params.id
     this.getPostDetails(id);
   }
-  
 
   getPostDetails = (id) => {
     this.props.fetchData(id)

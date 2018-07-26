@@ -227,6 +227,13 @@ export function postDataFetched(state = {}, action) {
       //console.log('UPDATE_POST_COMMENT_COUNT:U:U:' + JSON.stringify(updatedComment))
       return Object.assign({}, state, updatedComment)
     
+    case COMMENT_DELETE_SUCCESS:
+      //console.log('COMMENT_DELETE_SUCCESS..' + JSON.stringify(state))
+      return {
+        ...state,
+        commentCount: state.commentCount - 1
+      }
+
     default:
       return state;
   }
