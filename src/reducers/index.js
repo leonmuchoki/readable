@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 
-import { GET_POSTS, ADD_NEW_POST, POSTS_FETCH_DATA_SUCCESS,
+import { GET_POSTS, ADD_NEW_POST, EDIT_POST, POSTS_FETCH_DATA_SUCCESS,
          POSTS_IS_LOADING, POSTS_HAS_ERRORED, POSTS_DELETE_SUCCESS, POST_VOTE_SUCCESS,
          POST_GET_DATA_SUCCESS, POST_IS_CREATED, CATEGORY_POSTS_FETCH_DATA_SUCCESS,
-         SORT_POSTS, GET_CATEGORIES_SUCCESS } from '../actions/posts';
+         SORT_POSTS, GET_CATEGORIES_SUCCESS, POST_IS_UPDATED } from '../actions/posts';
 import { COMMENTS_IS_LOADING, COMMENTS_HAS_ERRORED, COMMENTS_FETCH_DATA_SUCCESS,
          POST_COMMENTS_FETCHED, COMMENT_IS_POSTING, ADD_COMMENT, UPDATE_POST_COMMENT_COUNT,
          GET_COMMENTS, COMMENT_DELETE_SUCCESS, COMMENT_VOTE_SUCCESS } from '../actions/comments';
@@ -132,7 +132,7 @@ const postsInitialState = {
 }
 
 function allPosts(state=postsInitialState, action) {
-  const { allPosts, post, postId, postedData } = action
+  const { allPosts, post, postId, postedData, updatedPostData } = action
   switch(action.type) {
     case ADD_NEW_POST:
       //console.log('reducer ADD_NEW_POST::' + JSON.stringify(action.postedData))
@@ -140,6 +140,20 @@ function allPosts(state=postsInitialState, action) {
                                   {allPosts: [
                                     ...state.allPosts, postedData
                                   ]})//Object.assign({},state,action.post )//Object.assign({},state,{ ...state.allPosts, ...action.post })
+
+    case EDIT_POST:
+      const posts = state.allPosts
+      let postsUpdated = posts.map((p)=>{
+        if (p.id === updatedPostData.id) {
+          return Object.assign({}, p, updatedPostData)
+        }
+        return p
+      })
+      //console.log('EDIT_POST>>>' + JSON.stringify(postsUpdated))
+      return Object.assign({},state,
+                              {allPosts: [
+                                state.allPosts, 
+                                ...postsUpdated]})
 
     case GET_POSTS:
       //console.log('reducer post::' + JSON.stringify(allPosts))
@@ -225,6 +239,17 @@ export function postIsCreated(state = false, action) {
   }
 }
 
+export function postHasUpdated(state = false, action) {
+  switch(action.type) {
+    case POST_IS_UPDATED:
+      //console.log('reducer POST_IS_CREATED::' + JSON.stringify(action.hasCreated))
+      return action.hasUpdated;
+    
+    default:
+      return state;
+  }
+}
+
 export function postsIsLoading(state = false, action) {
   switch (action.type) {
     case POSTS_IS_LOADING:
@@ -292,5 +317,6 @@ export default combineReducers({
   postIsCreated,
   categoryPosts,
   sortPosts,
-  getCategories
+  getCategories,
+  postHasUpdated
 })

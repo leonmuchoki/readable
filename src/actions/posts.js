@@ -2,6 +2,7 @@ import * as ReadableAPI from '../utils/ReadableAPI';
 
 export const GET_POSTS = 'GET_POSTS'
 export const ADD_NEW_POST = 'ADD_NEW_POST'
+export const EDIT_POST = 'EDIT_POST'
 export const POSTS_HAS_ERRORED = 'POSTS_HAS_ERRORED'
 export const POSTS_IS_LOADING = 'POSTS_IS_LOADING'
 export const POSTS_FETCH_DATA_SUCCESS = 'POSTS_FETCH_DATA_SUCCESS'
@@ -14,6 +15,7 @@ export const POST_IS_CREATED = 'POST_IS_CREATED'
 export const CATEGORY_POSTS_FETCH_DATA_SUCCESS = 'CATEGORY_POSTS_FETCH_DATA_SUCCESS'
 export const SORT_POSTS = 'SORT_POSTS'
 export const GET_CATEGORIES_SUCCESS = 'GET_CATEGORIES_SUCCESS'
+export const POST_IS_UPDATED = 'POST_IS_UPDATED'
 
 export function updatePostCommentCount(postId,commentCount) {
   return {
@@ -45,10 +47,25 @@ export function addNewPostSuccess(postedData) {
   };
 }
 
+// edit post 
+export function editPostSuccess(updatedPostData) {
+  return {
+    type: EDIT_POST,
+    updatedPostData
+  }
+}
+
 export function postIsCreated(bool) {
   return {
     type: POST_IS_CREATED,
     hasCreated: bool
+  };
+}
+
+export function postIsUpdated(bool) {
+  return {
+    type: POST_IS_UPDATED,
+    hasUpdated: bool
   };
 }
 
@@ -93,6 +110,22 @@ export function addPostData(postData) {
   }
 }
 
+//edit post editPost
+export function editPostData(postId,editedData) {
+  return (dispatch) => {
+    dispatch(postIsUpdated(false));
+
+    ReadableAPI.updatePost(postId,editedData)
+                .then((data)=> {
+                  //console.log('editPostSuccess ' + JSON.stringify(data))
+                  dispatch(editPostSuccess(data))
+                })
+                .then((response)=> {
+                  dispatch(postIsUpdated(true));
+                })
+                .catch(()=> dispatch(postsHasErrored(true)))  
+  }
+}
 
 export function postsHasErrored(bool) {
   return {

@@ -23,6 +23,19 @@ export const getPost = (id) =>
   .then(res => res.json())
   .then(data => data)
 
+// UPDATE POST /posts/:id
+export const updatePost = (postId,post_body) => 
+  fetch(`${api}/posts/${postId}`, { 
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(post_body)
+  })
+    .then(res => res.json())
+    .then(data => data)
+
 // get all categories
 export const getAllCatgories = () => 
   fetch(`${api}/categories`, { headers })
