@@ -1,16 +1,44 @@
-## description
+# Readable
+
 A content and comment web app. Users will be able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Users will also be able to edit and delete posts and comments.
 
-## installation 
-* react front-end
-- npm install
-- npm start or yarn start
 
-* Back-end... built in Node...
-Install and start the API server: https://github.com/udacity/reactnd-project-readable-starter
-    - `cd api-server`
-    - `npm install`
-    - `node server`
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+
+### Prerequisites
+
+
+```
+yarn or npm
+```
+
+### Installing
+
+```
+npm install
+npm start or yarn start
+```
+
+## Built With
+
+* React
+* Redux
+* Redux-thunk
+
+## Authors
+
+* **Leon Muchoki** 
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+* Udacity React Team
 
 
 ## references
